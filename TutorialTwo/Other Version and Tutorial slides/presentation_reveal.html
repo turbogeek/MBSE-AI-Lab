@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Two: Building a Satisfy Matrix</title>
+    <!-- Reveal.js base styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reset.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/theme/white.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom Dassault Systèmes Theme Overrides for Reveal.js */
+        .reveal {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at top right, #ffffff, #e2e8f0),
+                        radial-gradient(circle at bottom left, #f1f5f9, #cbd5e1);
+        }
+        .reveal h1, .reveal h2, .reveal h3 {
+            font-family: 'Outfit', sans-serif;
+            text-transform: none;
+        }
+        .reveal h1 {
+            color: #005386;
+            font-weight: 800;
+        }
+        .reveal h2 {
+            color: #00A3E0;
+            font-weight: 700;
+        }
+        .reveal p, .reveal li {
+            color: #334155;
+        }
+        .pain-text { color: #ef4444; font-weight: 800; }
+        .joy-text { color: #10b981; font-weight: 800; }
+        .code-block {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            text-align: left;
+            border: 2px solid rgba(0, 0, 0, 0.15);
+        }
+        .screenshot {
+            max-width: 90%;
+            max-height: 50vh;
+            border-radius: 8px;
+            border: 2px solid rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+
+            <!-- Slide 1 -->
+            <section>
+                <h1>Tutorial Two</h1>
+                <h2>SysMLv2 Satisfy Matrix GUI</h2>
+                <p>From simple scripts to powerful, interactive tooling.</p>
+            </section>
+
+            <!-- Slide 2 -->
+            <section>
+                <h2 class="joy-text">Why Build Tool Extensions?</h2>
+                <p>We often need more control, customized views, and specific workflows than the base tool offers.</p>
+                <ul style="font-size: 0.8em;">
+                    <li><strong>Custom Visualizations:</strong> Fit the views to your specific organizational standards.</li>
+                    <li><strong>Implied Relationships:</strong> Show data the tool knows, but doesn't explicitly draw.</li>
+                    <li><strong>Integration:</strong> Bridge Cameo with Jira, DOORS, or custom reporting.</li>
+                    <li><strong>AI Synergy:</strong> Integrate AI directly into the tool to do more than its developers intended.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 3 -->
+            <section>
+                <h2>Matrix Architecture</h2>
+                <p>What are we building?</p>
+                <ul style="font-size: 0.8em;">
+                    <li><strong>UI Framework:</strong> Standard Java Swing <code>JDialog</code> with custom <code>Graphics2D</code> drawing.</li>
+                    <li><strong>Data Mining:</strong> Deep scanning of <code>RequirementUsage</code> and <code>SatisfyRequirementUsage</code> inside a namespace.</li>
+                    <li><strong>Visual Indicators:</strong> Direct Satisfy (Green Arrow) vs Implied Satisfy (Blue Dashed Arrow).</li>
+                    <li><strong>Interactivity:</strong> Double-clicking a cell automatically selects the relevant item in the containment tree.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 4 -->
+            <section>
+                <h2 class="pain-text">Direct vs Implied Satisfy</h2>
+                <div style="font-size: 0.7em; text-align: left; background: rgba(255,255,255,0.8); padding: 20px; border-radius: 10px;">
+                    <p><strong>Direct Satisfy:</strong> The element explicitly owns a <code>SatisfyRequirementUsage</code> pointing to the Requirement.</p>
+                    <p><strong>Implied Satisfy:</strong> The element <em>owns</em> (or is a parent of) a sub-feature that directly satisfies a requirement. If a component's sub-part meets the requirement, the component itself inherently implies satisfaction.</p>
+                </div>
+                <div class="code-block" style="margin-top: 20px;">
+                    if (A owns B) AND (B satisfies R)<br>
+                    then -> (A implied_satisfies R)
+                </div>
+            </section>
+
+            <!-- Slide 5 -->
+            <section>
+                <h2>Environment Setup</h2>
+                <p style="font-size: 0.8em;">Before running the script, load the test model:</p>
+                <ol style="font-size: 0.7em; text-align: left;">
+                    <li>Create a new <strong>SysMLv2 Project</strong> in Cameo / MagicDraw.</li>
+                    <li>Import the provided <code>Test Model/Drone.sysml</code> file.</li>
+                    <li>Select the <code>Drone</code> package in the containment tree.</li>
+                    <li>Run the Satisfy Matrix script!</li>
+                </ol>
+                <img src="Example Matrix Dialog/ExampleMatrixDialog.png" alt="Matrix Result" class="screenshot" onerror="this.style.display='none';">
+            </section>
+
+            <!-- Slide 6 -->
+            <section>
+                <h2>The Resulting Dialog</h2>
+                <p>Our custom Graphic2D Satisfy Matrix rendered inside Cameo.</p>
+                <img src="Screen Shots for Tutorial 2/FinalDialogTest.png" alt="Example Matrix Dialog" class="screenshot" onerror="this.style.display='none';">
+            </section>
+
+            <!-- Slide 7 -->
+            <section>
+                <h2>Key Highlights</h2>
+                <ul style="font-size: 0.8em;">
+                    <li><strong>Graphics2D over JTable:</strong> We used custom rendering to achieve beautiful 45-degree angled column headers.</li>
+                    <li><strong>Dynamic Toggles:</strong> "Show Implied" dynamically recalculates the tree and repaints instantly.</li>
+                    <li><strong>No Mutation:</strong> Unlike Tutorial One, this script doesn't alter the model—it just reads it safely.</li>
+                </ul>
+            </section>
+
+            <!-- Slide 8 -->
+            <section>
+                <h2>The Exact Prompt Used</h2>
+                <div class="code-block" style="font-size: 0.6em; max-height: 50vh; overflow-y: auto;">
+Act as a SysMLv2 modeling expert for the CATIA Magic Open API with expertise in the Groovy Language, Java, the SysMLv2 standard, and the Cameo API. Your task is to develop, test, and validate a Groovy script that will show a Satisfy matrix with the given requirements and architecture in this file: "Tutorials\TutorialTwo\requirements.md". Put the new scripts into ./Tutorials/TutorialTwo/scripts/version<version_number> folder...
+<br><br>
+- Wrap all model changes in a SessionManager transaction.<br>
+- Create a dedicated script logger targeting `SatisfyMatrix.log`.<br>
+- **CRITICAL:** Event handlers and rendering methods (`paintComponent`) execute on the AWT Event Dispatch Thread. You MUST wrap the entire bodies of these methods in a `try-catch (Throwable t)` block and log errors!
+                </div>
+            </section>
+
+            <!-- Slide 9 -->
+            <section>
+                <h2 class="pain-text">When Exceptions Escape</h2>
+                <p style="font-size: 0.7em;">If an error occurs inside a GUI thread, MagicDraw intercepts it and displays the Internal Errors dialog.</p>
+                <img src="Example Matrix Dialog/ErrorNotCaughtByScript.png" alt="Internal Error" class="screenshot" onerror="this.style.display='none';">
+            </section>
+
+            <!-- Slide 10 -->
+            <section>
+                <h2>Starting the MCP Server</h2>
+                <p style="font-size: 0.8em;">Configure your AI client to launch the server automatically.</p>
+                <div style="font-size: 0.7em; text-align: left; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px;">
+                    <strong>For Claude Desktop:</strong> Edit your <code>claude_desktop_config.json</code>:
+                </div>
+                <div class="code-block" style="margin-top: 10px;">
+"mcpServers": {<br>
+&nbsp;&nbsp;"cameo-api": {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"command": "node",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;"args": ["E:/_Documents/git/TutorialForCatiaMagicApiMCP/MCP4MagicAPI/build/index.js"]<br>
+&nbsp;&nbsp;}<br>
+}
+                </div>
+            </section>
+
+            <!-- Slide 11 -->
+            <section>
+                <h2>Alternative: Command Prompt</h2>
+                <p style="font-size: 0.7em;">Start the server manually to test without an AI client.</p>
+                <div style="font-size: 0.7em; text-align: left; background: rgba(255,255,255,0.8); padding: 10px; border-radius: 10px; margin-bottom: 10px;">
+                    <strong>Run the MCP Inspector:</strong> This opens a local web interface to manually test the API tools!
+                </div>
+                <div class="code-block">
+cd E:\_Documents\git\TutorialForCatiaMagicApiMCP\MCP4MagicAPI<br>
+npx @modelcontextprotocol/inspector node build/index.js
+                </div>
+            </section>
+
+            <!-- Slide 12 -->
+            <section>
+                <h1>The Sky is the Limit</h1>
+                <p>Now that you can read, parse, and visualize the SysMLv2 model...</p>
+                <h2 style="margin-top: 1em;">What will you build next?</h2>
+            </section>
+
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.5.0/reveal.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            transition: 'slide', 
+            backgroundTransition: 'fade',
+            slideNumber: true
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial One: Cameo API & MCP Server</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #00A3E0;
+            --bg: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.15);
+            --text: #1e293b;
+            --error: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            background: radial-gradient(circle at top right, #ffffff, #e2e8f0),
+                        radial-gradient(circle at bottom left, #f1f5f9, #cbd5e1);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1300px;
+            height: 85vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s ease;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border-radius: 2rem;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #005386, #00A3E0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            max-width: 900px;
+            color: #334155;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        ul {
+            text-align: left;
+            font-size: 1.4rem;
+            color: #334155;
+            max-width: 900px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        li {
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            margin-top: 2rem;
+            border: 2px solid var(--glass-border);
+            width: 100%;
+            max-width: 1000px;
+            color: #0f172a;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .slide-number {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+
+        .pain-text { color: var(--error); font-weight: 800; }
+        .joy-text { color: var(--success); font-weight: 800; }
+
+        /* Infographic Styles */
+        .infographic {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 2rem;
+            gap: 1rem;
+        }
+        .info-box {
+            background: rgba(0,0,0,0.5);
+            border: 2px solid var(--glass-border);
+            border-radius: 1rem;
+            padding: 1.5rem;
+            flex: 1;
+            text-align: center;
+            min-height: 180px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .info-box h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        .info-box p {
+            font-size: 1.1rem;
+            color: #f8fafc;
+            font-weight: 600;
+        }
+        .info-arrow {
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        .workflow-step {
+            background: rgba(99, 102, 241, 0.15);
+            border-left: 6px solid var(--primary);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            text-align: left;
+        }
+        .workflow-step h3 {
+            margin-bottom: 0.3rem;
+            color: #ffffff;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+        .workflow-step p {
+            font-size: 1.1rem;
+            color: #e2e8f0;
+            font-weight: 500;
+        }
+        img.screenshot {
+            max-width: 90%;
+            max-height: 55vh;
+            border-radius: 8px;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Tutorial One</h1>
+            <h2>Pool Cleaning Robot: SysMLv2 + MCP</h2>
+            <p>From manual suffering to AI-assisted modeling mastery.</p>
+        </div>
+
+        <!-- Slide 2: The Old Way -->
+        <div class="slide">
+            <h2 class="pain-text">The Old Way: Much Pain & Suffering</h2>
+            <ul>
+                <li><strong>API is Deceitful:</strong> Overlapping packages and complex UML metamodels.</li>
+                <li><strong>Reference Only:</strong> Docs tell you "what," but never "how" for your use case.</li>
+                <li><strong>Blind Coding:</strong> No unit testing, slow iteration cycles, and turnaround times that kill flow.</li>
+                <li><strong>No Real IDE:</strong> Coding in a modeler's world is a lonely endeavor.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: The New Way -->
+        <div class="slide">
+            <h2 class="joy-text">The New Way: Enter the AI "Intern"</h2>
+            <p>Using an LLM Agent with an MCP Client to do the heavy lifting.</p>
+            <ul>
+                <li><strong>Grounded Context:</strong> AI understands your specific API conventions (Sessions, logging).</li>
+                <li><strong>Rapid Iteration:</strong> Real-time script generation based on your requirements.</li>
+                <li><strong>Human Intervention:</strong> You guide the "intern," keeping the logic sound while it handles the syntax.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: LLM Agent Ecosystem -->
+        <div class="slide">
+            <h2>LLM Agent Ecosystem & Configuration</h2>
+            <p>How the AI interacts with your local environment.</p>
+            <div class="infographic">
+                <div class="info-box">
+                    <h3>LLM Agents</h3>
+                    <p>Claude, Gemini, etc.</p>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #a855f7;">Brain of the operation</p>
+                </div>
+                <div class="info-arrow">&harr;</div>
+                <div class="info-box" style="border-color: var(--primary);">
+                    <h3>Workspace Configuration</h3>
+                    <p><code>.claude/</code>, <code>.gemini/</code>, <code>.antigravity/</code></p>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #10b981;">Persistent context, agent skills, custom rules</p>
+                </div>
+                <div class="info-arrow">&harr;</div>
+                <div class="info-box">
+                    <h3>MCP Server</h3>
+                    <p>Model Context Protocol</p>
+                    <p style="font-size: 0.8rem; margin-top: 0.5rem; color: #3b82f6;">Accesses Open API docs, examples, and Cameo installation</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: The Automation Workflow -->
+        <div class="slide">
+            <h2>The Automation Workflow</h2>
+            <p>From idea to verified model execution.</p>
+            <div style="margin-top: 1.5rem;">
+                <div class="workflow-step">
+                    <h3>1. Submit the Prompt</h3>
+                    <p>User describes the requirement (e.g. "Swimming Robot") in plain English.</p>
+                </div>
+                <div class="workflow-step">
+                    <h3>2. Context Reading</h3>
+                    <p>Agent reads skill/agent files (e.g. <code>cameo-api-scripter.md</code>) for established patterns and rules.</p>
+                </div>
+                <div class="workflow-step">
+                    <h3>3. Use MCP & Commands</h3>
+                    <p>Agent searches Javadoc/Guides via MCP, or runs commands and scripts to search or perform tasks as needed.</p>
+                </div>
+                <div class="workflow-step">
+                    <h3>4. Iterations via Test Harness</h3>
+                    <p>Agent writes Groovy, triggers test harness (port 8765), and self-corrects based on log outputs until success.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: The Secret Sauce: Test Harness -->
+        <div class="slide">
+            <h2>The Secret Sauce: Test Harness</h2>
+            <p>We've built a bridge directly into the heart of Cameo.</p>
+            <div class="code-block" style="color: #10b981;">
+                HTTP POST -> http://localhost:8765/run<br>
+                1. AI writes script -> [SwimmingRobot.groovy]<br>
+                2. AI pushes to Harness via /run<br>
+                3. Cameo executes and logs to [SwimmingRobot.log]<br>
+                4. AI tails log and self-corrects until GREEN
+            </div>
+        </div>
+
+        <!-- Slide 5: The Mission -->
+        <div class="slide">
+            <h1>The Goal</h1>
+            <p>Generate a "Swimming Robot" SysMLv2 Model:</p>
+            <ul>
+                <li>Requirement REQ-1 ($500 cost attribute)</li>
+                <li>Part "robot1" typed by "Swimming Robot"</li>
+                <li>Requirement Satisfaction mapping</li>
+                <li>Automated verification listing</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: The "Smidgen of Pain" -->
+        <div class="slide">
+            <h2 class="pain-text">The "Smidgen of Pain" (Iteration)</h2>
+            <div class="code-block" style="color: #ef4444; font-size: 0.9rem;">
+                [ERROR] unable to resolve class LiteralReal<br>
+                [ERROR] SysMLv2Logger(String, File) constructor not found
+            </div>
+            <p style="margin-top: 1.5rem;">The AI isn't perfect. It hallucinated a v1 class and had a sync issue. But with the <strong>Harness</strong>, we caught these in seconds, not hours.</p>
+        </div>
+
+        <!-- Slide 7: Success! -->
+        <div class="slide">
+            <h2 class="joy-text">MISSION ACCOMPLISHED</h2>
+            <div class="code-block" style="color: #10b981; font-size: 0.9rem;">
+                [INFO] Created Requirement: REQ-1 (Swimming Robot)<br>
+                [INFO] Created Part Usage: robot1<br>
+                [INFO] Created Attribute: cost = 500.0<br>
+                [INFO] Created Satisfaction: robot1 satisfies REQ-1
+            </div>
+            <p>The model was generated, verified, and logged automatically.</p>
+        </div>
+
+        <!-- Slide: Containment Tree -->
+        <div class="slide">
+            <h2>The Generated Containment Tree</h2>
+            <p>Here is what the model looks like inside Cameo.</p>
+            <img src="screenShots/ContainnmentTree.png" alt="Containment Tree" class="screenshot">
+        </div>
+
+        <!-- Slide: Unnamed View -->
+        <div class="slide">
+            <h2>Model View</h2>
+            <p>Visualizing the generated elements.</p>
+            <img src="screenShots/unnamedView.png" alt="Unnamed View" class="screenshot">
+        </div>
+
+        <!-- Slide: SysML Language Equivalent -->
+        <div class="slide">
+            <h2>SysMLv2 Language Equivalent</h2>
+            <p>Textual representation of our generated model.</p>
+            <img src="screenShots/SysML-LanguageEquivelent.png" alt="SysML Language Equivalent" class="screenshot">
+        </div>
+
+        <!-- Slide: The Generated Script -->
+        <div class="slide">
+            <h2>The Generated Groovy Script</h2>
+            <p>The code that made it all happen.</p>
+            <div class="code-block" style="font-size: 0.6rem; max-height: 50vh; overflow-y: auto;">
+import com.dassault_systemes.modeler.kerml.find.Finder
+import com.dassault_systemes.modeler.kerml.libraries.standard.ScalarValuesLibrary
+import com.dassault_systemes.modeler.kerml.model.*
+import com.dassault_systemes.modeler.kerml.model.kerml.*
+import com.dassault_systemes.modeler.sysml.model.ElementsFactory
+import com.dassault_systemes.modeler.sysml.model.sysml.*
+import com.nomagic.magicdraw.core.Application
+import com.nomagic.magicdraw.core.Project
+import com.nomagic.magicdraw.openapi.uml.SessionManager
+import java.util.Arrays
+
+// Logger setup
+String scriptDir = "E:\\_Documents\\git\\SysMLv2ClientAPI\\scripts"
+File loggerFile = new File(scriptDir, "SysMLv2Logger.groovy")
+def loggerClass = new GroovyClassLoader(getClass().getClassLoader()).parseClass(loggerFile)
+File runLog = new File("E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\logs", "SwimmingRobot.log")
+def logger = loggerClass.newInstance("SwimmingRobotTutorial", runLog)
+
+try {
+    Project project = Application.getInstance().getProject()
+    if (project == null) {
+        logger.error("No active MagicDraw project!")
+        return
+    }
+
+    // Get selected element
+    Namespace selectedNamespace = null
+    def browser = Application.getInstance().getMainFrame().getBrowser()
+    if (browser != null) {
+        def selectedNodes = browser.getActiveTree()?.getSelectedNodes()
+        if (selectedNodes != null && selectedNodes.length > 0) {
+            def element = selectedNodes[0].getUserObject()
+            if (element instanceof Namespace) {
+                selectedNamespace = (Namespace) element
+            }
+        }
+    }
+
+    if (selectedNamespace == null) {
+        logger.error("Please select a Namespace in the Containment Tree.")
+        return
+    }
+
+    boolean sessionCreated = false
+    try {
+        if (!SessionManager.getInstance().isSessionCreated(project)) {
+            SessionManager.getInstance().createSession(project, "Generate Swimming Robot Model")
+            sessionCreated = true
+        }
+
+        logger.info("Initializing model generation...")
+        ElementsFactory factory = ElementsFactory.get(selectedNamespace)
+        ScalarValuesLibrary scalarValuesLib = ScalarValuesLibrary.getInstance(selectedNamespace)
+
+        // 0. Create Package "Swimming Robot"
+        Package robotPkg = factory.createPackage()
+        robotPkg.setOwner(selectedNamespace)
+        robotPkg.setDeclaredName("Swimming Robot")
+        logger.info("Created Package: Swimming Robot")
+
+        // 1. Create Requirement REQ-1
+        RequirementUsage req1 = factory.createRequirementUsage()
+        req1.setOwner(robotPkg)
+        req1.setDeclaredName("REQ-1")
+        
+        Documentation doc = factory.createDocumentation()
+        doc.setOwner(req1)
+        doc.setBody("The robot shall be able to swim in a pool.")
+        logger.info("Created Requirement: REQ-1 (Swimming Robot)")
+
+        // 2. Create Part Definition "Swimming Robot"
+        PartDefinition robotDef = factory.createPartDefinition()
+        robotDef.setOwner(robotPkg)
+        robotDef.setDeclaredName("Swimming Robot")
+        logger.info("Created Part Definition: Swimming Robot")
+
+        // 3. Create Part Usage "robot1"
+        PartUsage robot1 = factory.createPartUsage()
+        robot1.setOwner(robotPkg)
+        robot1.setDeclaredName("robot1")
+        FeatureTypings.addType(robot1, robotDef)
+        logger.info("Created Part Usage: robot1")
+
+        // 4. Create Attribute Usage "cost"
+        AttributeUsage cost = factory.createAttributeUsage()
+        cost.setOwner(robot1)
+        cost.setDeclaredName("cost")
+        FeatureTypings.addType(cost, scalarValuesLib.Real().getElement())
+        
+        // Set Default Value ($500)
+        LiteralRational literalRational = factory.createLiteralRational()
+        literalRational.setValue(500.0)
+        Elements.setOwningMembership(literalRational, cost, KerMLPackage.eINSTANCE.getFeatureValue())
+        logger.info("Created Attribute: cost = 500.0")
+
+        // 5. Create Satisfaction (SatisfyRequirementUsage)
+        SatisfyRequirementUsage satisfy = factory.createSatisfyRequirementUsage()
+        satisfy.setOwner(robot1)
+        satisfy.setDeclaredName("Satisfies REQ-1")
+        
+        ReferenceSubsetting subsetting = factory.createReferenceSubsetting()
+        subsetting.setSubsettingFeature(satisfy)
+        subsetting.setSubsettedFeature(req1)
+        subsetting.setOwner(satisfy)
+        
+        logger.info("Created Satisfaction: robot1 satisfies REQ-1")
+
+        // 6. Listing Elements for Validation
+        logger.info("--- Model Validation Summary ---")
+        logger.info("Requirement: " + req1.getHumanName() + " [Doc: " + doc.getBody() + "]")
+        logger.info("Definition: " + robotDef.getHumanName())
+        logger.info("Usage: " + robot1.getHumanName() + " (Typed by: " + robotDef.getDeclaredName() + ")")
+        logger.info("Attribute: " + cost.getHumanName() + " = " + literalRational.getValue())
+        logger.info("Allocation/Satisfy created successfully.")
+        logger.info("---------------------------------")
+
+        if (sessionCreated) {
+            SessionManager.getInstance().closeSession(project)
+        }
+
+    } catch (Exception e) {
+        if (sessionCreated) {
+            SessionManager.getInstance().cancelSession(project)
+        }
+        logger.error("Script execution failed. Model changes reverted.", e)
+    }
+
+} catch (Throwable t) {
+    logger.error("Critical script failure", t)
+}
+            </div>
+        </div>
+
+        <!-- Slide 8: Key Takeaways -->
+        <div class="slide">
+            <h2>Key Takeaways</h2>
+            <ul>
+                <li><strong>Grounded Prompts:</strong> Tell the AI exactly which factory to use (ElementsFactory) and what metamodel to use (e.g. `SatisfyRequirementUsage`).</li>
+                <li><strong>Dedicated Logging:</strong> Use a file-based logger so the AI can "see" its own mistakes.</li>
+                <li><strong>Harness the Power:</strong> The Test Harness is the difference between guessing and knowing.</li>
+                <li><strong>SysMLv2 Specifics:</strong> Watch out for `LiteralRational` vs `LiteralReal`!</li>
+            </ul>
+        </div>
+
+        <!-- Slide 9: The Exact Prompt -->
+        <div class="slide">
+            <h2>The Exact Prompt Used</h2>
+            <div class="code-block" style="font-size: 0.6rem; max-height: 50vh; overflow-y: auto;">
+Act as a SysMLv2 modeling expert for the CATIA Magic Open API. Your task is to develop, test, and validate a Groovy script that generates a "Swimming Robot" requirement and its satisfying architecture.
+
+### Model Requirements (SysMLv2):
+1. Resolve the selected namespace and create a new Package called "Swimming Robot" within it. All subsequent elements MUST be created inside this new package.
+2. Create the Requirement "REQ-1" for a "Swimming Robot" (owned by the new package) with documentation: "The robot shall be able to swim in a pool."
+3. Create a Part Definition "Swimming Robot" (owned by the new package).
+4. Create a Part Usage "robot1" typed by the "Swimming Robot" definition (owned by the new package).
+5. Create an Attribute Usage "cost" under "robot1" with type ScalarValue::Real and a default value of 500.0 (use LiteralRational).
+6. Create a `SatisfyRequirementUsage` as a feature of the "robot1" usage. This satisfy usage MUST reference "REQ-1" as its satisfied requirement by creating a `ReferenceSubsetting` where the subsetted feature is the requirement, and subsetting feature is the satisfy usage, with the owner of the subsetting being the satisfy usage.
+
+### Execution Requirements:
+- Wrap all model changes in a SessionManager transaction.
+- Use ElementsFactory from the selected Namespace in the containment tree.
+- Load and use the SysMLv2Logger utility with a dedicated log file at "E:\_Documents\git\TutorialForCatiaMagicApiMCP\logs\SwimmingRobot.log".
+- DO NOT use GStrings (e.g., "${var}"); use string concatenation or .toString().
+- Deploy and run the script via the Cameo Test Harness at http://localhost:8765/run.
+
+### Validation Loop:
+1. Generate the script and save it to "C:\Users\DBR2\Desktop\SwimmingRobot\SwimmingRobot.groovy".
+2. Trigger the /run endpoint on the test harness.
+3. Check the /status and tail the /log.
+4. If compilation or runtime errors occur (e.g., "unable to resolve class"), search the Javadoc via the MCP, fix the script, and re-run.
+5. Report the final containment tree structure in your summary.
+            </div>
+        </div>
+
+        <!-- Slide 10: Final Thought -->
+        <div class="slide">
+            <h1 style="font-size: 2.5rem;">Final Thought</h1>
+            <blockquote style="font-size: 1.5rem; font-style: italic; color: #9ca3af; margin: 2rem 0; border-left: 4px solid #3b82f6; padding-left: 1rem;">
+                “You probably don’t want to change the meaning of true halfway through your program (except perhaps if you’re a politician).”
+            </blockquote>
+            <p style="text-align: right; font-size: 1.2rem; color: #cbd5e1;">― Dave Thomas, Programming Ruby 1.9 & 2.0</p>
+            <h2 style="font-size: 2.0rem; margin-top: 4rem;">Ready for Tutorial Two?</h2>
+        </div>
+    </div>
+
+    <div class="slide-number"><span id="current">1</span> / <span id="total">12</span></div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const currentEl = document.getElementById('current');
+        const totalEl = document.getElementById('total');
+        
+        totalEl.textContent = slides.length;
+
+        function updateSlide() {
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === currentSlide);
+            });
+            currentEl.textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>

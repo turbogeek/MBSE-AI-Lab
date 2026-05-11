@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial Two: Building a Satisfy Matrix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #005386;
+            --secondary: #00A3E0;
+            --bg: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.85);
+            --glass-border: rgba(0, 0, 0, 0.15);
+            --text: #1e293b;
+            --error: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            overflow: hidden;
+            background: radial-gradient(circle at top right, #ffffff, #e2e8f0),
+                        radial-gradient(circle at bottom left, #f1f5f9, #cbd5e1);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .presentation-container {
+            width: 100%;
+            max-width: 1300px;
+            height: 85vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.6s ease;
+            transform: translateY(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            border-radius: 2rem;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #005386, #00A3E0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            color: var(--secondary);
+            margin-bottom: 2rem;
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            max-width: 900px;
+            color: #334155;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        ul {
+            text-align: left;
+            font-size: 1.4rem;
+            color: #334155;
+            max-width: 900px;
+            margin: 0 auto;
+            font-weight: 500;
+        }
+
+        li {
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #f1f5f9;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: left;
+            margin-top: 2rem;
+            border: 2px solid var(--glass-border);
+            width: 100%;
+            max-width: 1000px;
+            color: #0f172a;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        button {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 1rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        button:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #ffffff;
+        }
+
+        .slide-number {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #94a3b8;
+        }
+
+        .pain-text { color: var(--error); font-weight: 800; }
+        .joy-text { color: var(--success); font-weight: 800; }
+        img.screenshot {
+            max-width: 90%;
+            max-height: 55vh;
+            border-radius: 8px;
+            border: 2px solid var(--glass-border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            margin-top: 1.5rem;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            mermaid.initialize({ startOnLoad: true, theme: 'default' });
+        });
+    </script>
+</head>
+<body>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Tutorial Two</h1>
+            <h2>SysMLv2 Satisfy Matrix GUI</h2>
+            <p>From simple scripts to powerful, interactive tooling.</p>
+        </div>
+
+        <!-- Slide 2: Why Build This? -->
+        <div class="slide">
+            <h2 class="joy-text">Why Build Tool Extensions?</h2>
+            <p>We often need more control, customized views, and specific workflows than the base tool offers.</p>
+            <ul>
+                <li><strong>Custom Visualizations:</strong> Fit the views to your specific organizational standards.</li>
+                <li><strong>Implied Relationships:</strong> Show data the tool knows, but doesn't explicitly draw.</li>
+                <li><strong>Integration:</strong> Bridge Cameo with Jira, DOORS, or custom reporting.</li>
+                <li><strong>AI Synergy:</strong> Integrate AI directly into the tool to do more than its developers intended.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: The Architecture -->
+        <div class="slide">
+            <h2>Matrix Architecture</h2>
+            <p>What are we building?</p>
+            <ul>
+                <li><strong>UI Framework:</strong> Standard Java Swing <code>JDialog</code> with custom <code>Graphics2D</code> drawing.</li>
+                <li><strong>Data Mining:</strong> Deep scanning of <code>RequirementUsage</code> and <code>SatisfyRequirementUsage</code> inside a namespace.</li>
+                <li><strong>Visual Indicators:</strong> Direct Satisfy (Green Circle) vs Implied Satisfy (Blue Square).</li>
+                <li><strong>Interactivity:</strong> Double-clicking a cell automatically selects the relevant item in the containment tree.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Direct vs Implied -->
+        <div class="slide">
+            <h2 class="pain-text">Direct vs Implied Satisfy</h2>
+            <p>A crucial systems engineering distinction.</p>
+            <div style="text-align: left; max-width: 900px; margin: 0 auto; color: #334155; font-size: 1.3rem;">
+                <p><strong>Direct Satisfy:</strong> The element explicitly owns a <code>SatisfyRequirementUsage</code> pointing to the Requirement.</p>
+                <br>
+                <p><strong>Implied Satisfy:</strong> The element <em>owns</em> (or is a parent of) a sub-feature that directly satisfies a requirement. If a component's sub-part meets the requirement, the component itself inherently implies satisfaction.</p>
+            </div>
+            <div class="code-block" style="color: #005386;">
+                if (A owns B) AND (B satisfies R)<br>
+                then -> (A implied_satisfies R)
+            </div>
+        </div>
+
+        <!-- Slide 5: Environment Setup -->
+        <div class="slide">
+            <h2>Environment Setup</h2>
+            <p>Before running the script, load the test model:</p>
+            <ol style="max-width: 900px; margin: 0 auto; text-align: left; font-size: 1.4rem; color: #334155;">
+                <li style="margin-bottom: 0.5rem;">Create a new <strong>SysMLv2 Project</strong> in Cameo / MagicDraw.</li>
+                <li style="margin-bottom: 0.5rem;">Import the provided <code>Test Model/Drone.sysml</code> file.</li>
+                <li style="margin-bottom: 0.5rem;">Select the <code>Drone</code> package in the containment tree.</li>
+                <li>Run the Satisfy Matrix script!</li>
+            </ol>
+            <img src="Example Matrix Dialog/ExampleMatrixDialog.png" alt="Matrix Result" class="screenshot" style="max-height: 45vh; margin-top: 2rem;" onerror="this.style.display='none';">
+        </div>
+
+        <!-- Slide 6: The Matrix Dialog -->
+        <div class="slide">
+            <h2>The Resulting Dialog</h2>
+            <p>Our custom Graphic2D Satisfy Matrix rendered inside Cameo.</p>
+            <img src="Screen Shots for Tutorial 2/FinalDialogTest.png" alt="Example Matrix Dialog" class="screenshot" onerror="this.style.display='none';">
+        </div>
+
+        <!-- Slide 7: Highlights -->
+        <div class="slide">
+            <h2>Key Highlights</h2>
+            <ul>
+                <li><strong>Graphics2D over JTable:</strong> We used custom rendering to achieve beautiful 45-degree angled column headers.</li>
+                <li><strong>Dynamic Toggles:</strong> "Show Implied" dynamically recalculates the tree and repaints instantly.</li>
+                <li><strong>No Mutation:</strong> Unlike Tutorial One, this script doesn't alter the model—it just reads it safely.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 8: The Exact Prompt -->
+        <div class="slide">
+            <h2>The Exact Prompt Used</h2>
+            <div class="code-block" style="font-size: 0.8rem; max-height: 50vh; overflow-y: auto;">
+Act as a SysMLv2 modeling expert for the CATIA Magic Open API with expertise in the Groovy Language, Java, the SysMLv2 standard, and the Cameo API. Your task is to develop, test, and validate a Groovy script that will show a Satisfy matrix with the given requirements and architecture in this file: "Tutorials\TutorialTwo\requirements.md". Put the new scripts into ./Tutorials/TutorialTwo/scripts/version<version_number> folder, where <version_number> is the version number of the script.  Here are some important things to keep in mind when writing your scripts:
+
+- Wrap all model changes in a SessionManager transaction (if mutating the model, though the matrix is read-only).
+- Create a dedicated script logger targeting `Tutorials\TutorialTwo\logs\SatisfyMatrix.log` and use it for all diagnostic output. DO NOT rely on the GUI console alone.
+- If the agent encounters `UnmodifiableEList` or structural errors, it must inspect the log, adapt its approach, and try again until the log confirms successful execution without errors.
+- Ensure that the script defines element ownership precisely. (e.g. standard elements owned by the package, properties owned by usage blocks, satisfaction owned by usage).
+- ONLY use the `ElementsFactory.get(namespace)` and avoid `LiteralReal`. Use `LiteralRational` for attribute defaults to prevent type mismatch errors.
+            </div>
+        </div>
+
+        <!-- Slide 9: Architecture & Workflow -->
+        <div class="slide">
+            <h2>Architecture & Workflow</h2>
+            <div class="mermaid" style="background: white; border-radius: 8px; padding: 1rem; width: 90%; max-height: 60vh; overflow-y: auto;">
+                graph TD
+                %% Styling
+                classDef llm fill:#005386,stroke:#003b5c,stroke-width:2px,color:#fff,rx:5,ry:5
+                classDef mcp fill:#00A3E0,stroke:#0077a6,stroke-width:2px,color:#fff,rx:5,ry:5
+                classDef cameo fill:#10b981,stroke:#059669,stroke-width:2px,color:#fff,rx:5,ry:5
+                classDef action fill:#f59e0b,stroke:#d97706,stroke-width:2px,color:#fff,rx:5,ry:5
+
+                subgraph AI Workspace
+                    LLM["🤖 AI Assistant<br/>(Claude, Gemini, Antigravity)"]:::llm
+                    Config["⚙️ Workspace Config<br/>(.claude, .gemini, .antigravity)"]:::llm
+                    Skills["📚 Skill & Agent Files<br/>(Context & Rules)"]:::llm
+                end
+
+                subgraph MCP Integration Layer
+                    MCP["🔌 Model Context Protocol<br/>(MCP Server)"]:::mcp
+                    Scripts["💻 Commands & Scripts<br/>(Search, File System, Git)"]:::mcp
+                end
+
+                subgraph Cameo / MagicDraw
+                    API["📖 OpenAPI Docs<br/>(Javadoc, Guides)"]:::cameo
+                    Harness["⚙️ REST Test Harness<br/>(localhost:8765/run)"]:::cameo
+                    Tool["🛠️ Cameo Application"]:::cameo
+                end
+
+                %% Workflow Links
+                Config -.-> |Configures| LLM
+                User(("👤 User Prompt")) --> |Submits Prompt| LLM
+                LLM --> |Reads Context| Skills
+                
+                LLM --> |Uses Tools via| MCP
+                MCP --> |Executes| Scripts
+                MCP --> |Reads| API
+                
+                LLM --> |Generates Script & Triggers| Harness
+                Harness --> |Executes in| Tool
+                Harness -- "Error / Log output<br/>(Iteration Loop)" --> LLM:::action
+                
+                %% Emphasis on Iteration
+                linkStyle 8 stroke:#f59e0b,stroke-width:3px,stroke-dasharray: 5 5
+                linkStyle 9 stroke:#f59e0b,stroke-width:3px,stroke-dasharray: 5 5
+            </div>
+        </div>
+
+        <!-- Slide 10: Handling UI Exceptions -->
+        <div class="slide">
+            <h2 class="pain-text">When Exceptions Escape</h2>
+            <p>If an error occurs inside a GUI thread (like <code>paintComponent</code>), MagicDraw intercepts it and displays the Internal Errors dialog.</p>
+            <img src="Example Matrix Dialog/ErrorNotCaughtByScript.png" alt="Internal Error Dialog" class="screenshot" style="max-height: 40vh; margin-bottom: 1rem;" onerror="this.style.display='none';">
+            <p style="font-size: 1.2rem; margin-top: 1rem;">Update your prompt to prevent this:</p>
+            <div class="code-block" style="font-size: 0.9rem;">
+**CRITICAL:** Event handlers and rendering methods (`paintComponent`) execute on the AWT Event Dispatch Thread. Any uncaught exceptions will be intercepted by MagicDraw and display an internal error dialog to the user. You MUST wrap the entire bodies of these methods in a `try-catch (Throwable t)` block and log errors!
+            </div>
+        </div>
+
+        <!-- Slide 11: Next Steps -->
+        <div class="slide">
+            <h1 style="font-size: 3.5rem;">The Sky is the Limit</h1>
+            <p>Now that you can read, parse, and visualize the SysMLv2 model...</p>
+            <h2 style="font-size: 2.0rem; margin-top: 2rem;">What will you build next?</h2>
+        </div>
+    </div>
+
+    <div class="slide-number"><span id="current">1</span> / <span id="total">11</span></div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">Previous</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const currentEl = document.getElementById('current');
+        const totalEl = document.getElementById('total');
+        
+        totalEl.textContent = slides.length;
+
+        function updateSlide() {
+            slides.forEach((s, i) => {
+                s.classList.toggle('active', i === currentSlide);
+            });
+            currentEl.textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>
