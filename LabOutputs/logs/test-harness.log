@@ -1,0 +1,4 @@
+2026-05-12 19:47:51.897 [INFO] === Test harness starting ===
+2026-05-12 19:47:52.172 [INFO] Test harness listening on http://127.0.0.1:8765
+2026-05-12 19:51:59.350 [INFO] Launching script: C:\Users\CUSA_Admin\Documents\GitHub\MBSE-AI-Lab\Out\TutorialTwo\scripts\version4\SatisfyMatrix.groovy (runId=run-1778615519328)
+2026-05-12 19:52:01.874 [INFO] Script finished: C:\Users\CUSA_Admin\Documents\GitHub\MBSE-AI-Lab\Out\TutorialTwo\scripts\version4\SatisfyMatrix.groovy state=done
