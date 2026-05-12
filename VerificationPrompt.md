@@ -1,0 +1,3 @@
+# Initial setup and testing prompt.
+
+Ok, this is the first prompt to verify your capability to develop, test, and validate a Groovy script that generates a 'Swimming Robot' requirement and its satisfying architecture. Please use the prompt and attempt the task. Watch out for errors or steps that we may have missed like not setting up Java, Node.js, Cameo, or MCP servers. I have started both of the test harnesses that we need for all four labs and the scripts are at `http://localhost:8765/run` and `http://localhost:8764/run` for the Groovy test harness and the Python Test Harness for LLM/AI development
