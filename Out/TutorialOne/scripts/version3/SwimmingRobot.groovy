@@ -10,14 +10,14 @@ import com.nomagic.magicdraw.openapi.uml.SessionManager
 import java.util.Arrays
 
 // Logger setup
-String scriptDir = "[YOUR_WORKSPACE_PATH]/scripts"
+String scriptDir = "E:\\_Documents\\git\\MBSE-AI-Lab\\scripts"
 File loggerFile = new File(scriptDir, "SysMLv2Logger.groovy")
 if (!loggerFile.exists()) {
     System.err.println("Logger file not found: " + loggerFile.getAbsolutePath())
     return
 }
 def loggerClass = new GroovyClassLoader(getClass().getClassLoader()).parseClass(loggerFile)
-File runLog = new File("[YOUR_WORKSPACE_PATH]/Out/TutorialOne/logs", "SwimmingRobot.log")
+File runLog = new File("E:\\_Documents\\git\\MBSE-AI-Lab\\Out\\TutorialOne\\logs", "SwimmingRobot.log")
 if (!runLog.getParentFile().exists()) {
     runLog.getParentFile().mkdirs()
 }
@@ -30,7 +30,7 @@ try {
         return
     }
 
-    // Get selected element
+    // Get selected element from containment tree
     Namespace selectedNamespace = null
     def browser = Application.getInstance().getMainFrame().getBrowser()
     if (browser != null) {
@@ -51,11 +51,11 @@ try {
     boolean sessionCreated = false
     try {
         if (!SessionManager.getInstance().isSessionCreated(project)) {
-            SessionManager.getInstance().createSession(project, "Generate Swimming Robot Model")
+            SessionManager.getInstance().createSession(project, "Generate Swimming Robot Model (v3)")
             sessionCreated = true
         }
 
-        logger.info("Initializing model generation...")
+        logger.info("Initializing model generation (version 3)...")
         ElementsFactory factory = ElementsFactory.get(selectedNamespace)
         ScalarValuesLibrary scalarValuesLib = ScalarValuesLibrary.getInstance(selectedNamespace)
 
@@ -88,19 +88,19 @@ try {
         FeatureTypings.addType(robot1, robotDef)
         logger.info("Created Part Usage: robot1")
 
-        // 5. Create Attribute Usage "cost"
+        // 5. Create Attribute Usage "cost" under "robot1"
         AttributeUsage cost = factory.createAttributeUsage()
         cost.setOwner(robot1)
         cost.setDeclaredName("cost")
         FeatureTypings.addType(cost, scalarValuesLib.Real().getElement())
         
-        // Set Default Value ($500)
+        // Set Default Value of 500.0 (using LiteralRational)
         LiteralRational literalRational = factory.createLiteralRational()
         literalRational.setValue(500.0)
         Elements.setOwningMembership(literalRational, cost, KerMLPackage.eINSTANCE.getFeatureValue())
         logger.info("Created Attribute: cost = " + literalRational.getValue().toString())
 
-        // 6. Create Satisfaction (SatisfyRequirementUsage)
+        // 6. Create Satisfaction (SatisfyRequirementUsage) as feature of robot1 referencing REQ-1
         SatisfyRequirementUsage satisfy = factory.createSatisfyRequirementUsage()
         satisfy.setOwner(robot1)
         satisfy.setDeclaredName("Satisfies REQ-1")
@@ -112,7 +112,7 @@ try {
         
         logger.info("Created Satisfaction: robot1 satisfies REQ-1")
 
-        // 7. Listing Elements for Validation
+        // Listing Elements for Validation Summary
         logger.info("--- Model Validation Summary ---")
         logger.info("Requirement: " + req1.getHumanName() + " [Doc: " + doc.getBody() + "]")
         logger.info("Definition: " + robotDef.getHumanName())

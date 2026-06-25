@@ -9,7 +9,7 @@
 //   2. In the containment tree, create a new Package (right-click project root →
 //      Create Element → Package), name it "TF1" (or anything), and SELECT it.
 //   3. Run this script via the REST test harness:
-//        harness.bat run "E:\_Documents\git\TutorialForCatiaMagicApiMCP\v2Matrix\fixtures\build-fixture.groovy"
+//        harness.bat run "[YOUR_WORKSPACE_PATH]/Out/TutorialTwo/Examples of scripts/v2Matrix/fixtures/build-fixture.groovy"
 //   4. After successful creation: File → Save As →
 //        v2Matrix/fixtures/ReferenceProject.mdzip
 //
@@ -39,10 +39,10 @@ import com.dassault_systemes.modeler.kerml.model.kerml.Namespace
 import com.dassault_systemes.modeler.kerml.model.kerml.Element
 
 // ---- Logger ------------------------------------------------------------------
-String scriptDir = 'E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\scripts'
+String scriptDir = '[YOUR_WORKSPACE_PATH]/scripts'
 def LoggerClass = new GroovyClassLoader(getClass().getClassLoader())
     .parseClass(new File(scriptDir, 'SysMLv2Logger.groovy'))
-File logFile = new File('E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\logs', 'build-fixture.log')
+File logFile = new File('[YOUR_WORKSPACE_PATH]/Out/TutorialTwo/logs', 'build-fixture.log')
 def log = LoggerClass.newInstance('BuildFixture', logFile)
 log.info('=== build-fixture.groovy start ===')
 
@@ -113,7 +113,7 @@ if (fixtureRoot == null) {
                 def isLib = false
                 try {
                     def loaderX = new GroovyClassLoader(getClass().getClassLoader())
-                    def LD = loaderX.parseClass(new File('E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\scripts\\v2Matrix', 'LibraryDetector.groovy'))
+                    def LD = loaderX.parseClass(new File('[YOUR_WORKSPACE_PATH]/Out/TutorialTwo/Examples of scripts/v2Matrix', 'LibraryDetector.groovy'))
                     isLib = LD.isInStandardLibrary(cur as Element)
                 } catch (Exception ignored) {}
                 if (!isLib && cur.getDeclaredName() != null && !cur.getDeclaredName().isEmpty()) {
@@ -280,7 +280,7 @@ try {
 }
 
 // ---- Write fixture-manifest.json (hand-rolled JSON — no groovy.json.* in Cameo) --
-def manifestFile = new File('E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\v2Matrix\\fixtures\\fixture-manifest.json')
+def manifestFile = new File('[YOUR_WORKSPACE_PATH]/Out/TutorialTwo/Examples of scripts/v2Matrix/fixtures/fixture-manifest.json')
 def sb = new StringBuilder()
 sb.append('{\n')
 sb.append('  "fixtureVersion": 1,\n')

@@ -15,12 +15,15 @@ style: |
 ---
 
 # Tutorial Two
+
 ## SysMLv2 Satisfy Matrix GUI
+
 From simple scripts to powerful, interactive tooling.
 
 ---
 
 ## <span class="joy">Why Build Tool Extensions?</span>
+
 We often need more control, customized views, and specific workflows than the base tool offers.
 
 - **Custom Visualizations:** Fit the views to your specific organizational standards.
@@ -31,6 +34,7 @@ We often need more control, customized views, and specific workflows than the ba
 ---
 
 ## Matrix Architecture
+
 What are we building?
 
 - **UI Framework:** Standard Java Swing `JDialog` with custom `Graphics2D` drawing.
@@ -41,6 +45,7 @@ What are we building?
 ---
 
 ## <span class="pain">Direct vs Implied Satisfy</span>
+
 A crucial systems engineering distinction.
 
 **Direct Satisfy:** The element explicitly owns a `SatisfyRequirementUsage` pointing to the Requirement.
@@ -55,6 +60,7 @@ then -> (A implied_satisfies R)
 ---
 
 ## Environment Setup
+
 Before running the script, load the test model:
 
 1. Create a new **SysMLv2 Project** in Cameo / MagicDraw.
@@ -67,6 +73,7 @@ Before running the script, load the test model:
 ---
 
 ## The Resulting Dialog
+
 Our custom Graphic2D Satisfy Matrix rendered inside Cameo.
 
 ![height:450](Screen%20Shots%20for%20Tutorial%202/FinalDialogTest.png)
@@ -98,6 +105,7 @@ the Groovy Language, Java, the SysMLv2 standard, and the Cameo API...
 ---
 
 ## <span class="pain">When Exceptions Escape</span>
+
 If an error occurs inside a GUI thread, MagicDraw intercepts it and displays the Internal Errors dialog.
 
 ![height:350](Example%20Matrix%20Dialog/ErrorNotCaughtByScript.png)
@@ -105,15 +113,17 @@ If an error occurs inside a GUI thread, MagicDraw intercepts it and displays the
 ---
 
 ## Starting the MCP Server
+
 To give your AI access to the Cameo Open API MCP server, you must configure your AI client to launch it automatically.
 
 **For Claude Desktop:**
 Edit your `claude_desktop_config.json`:
+
 ```json
 "mcpServers": {
   "cameo-api": {
     "command": "node",
-    "args": ["E:/_Documents/git/TutorialForCatiaMagicApiMCP/MCP4MagicAPI/build/index.js"]
+    "args": ["[PATH_TO_MCP4MagicAPI_DIRECTORY]/build/index.js"]
   }
 }
 ```
@@ -121,18 +131,22 @@ Edit your `claude_desktop_config.json`:
 ---
 
 ## Alternative: Command Prompt Startup
+
 If you want to test the server without an AI client, or run it for an agent that connects via standard input/output over a terminal, you can start it directly from the command prompt.
 
 **Run the MCP Inspector (Interactive testing):**
+
 ```cmd
-cd E:\_Documents\git\TutorialForCatiaMagicApiMCP\MCP4MagicAPI
+cd [PATH_TO_MCP4MagicAPI_DIRECTORY]
 npx @modelcontextprotocol/inspector node build/index.js
 ```
+
 *This opens a local web interface to manually test the API tools!*
 
 ---
 
 # The Sky is the Limit
+
 Now that you can read, parse, and visualize the SysMLv2 model...
 
 ## What will you build next?

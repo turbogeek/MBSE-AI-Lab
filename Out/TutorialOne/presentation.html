@@ -402,10 +402,10 @@ import com.nomagic.magicdraw.openapi.uml.SessionManager
 import java.util.Arrays
 
 // Logger setup
-String scriptDir = "E:\\_Documents\\git\\SysMLv2ClientAPI\\scripts"
+String scriptDir = "[YOUR_WORKSPACE_PATH]/scripts"
 File loggerFile = new File(scriptDir, "SysMLv2Logger.groovy")
 def loggerClass = new GroovyClassLoader(getClass().getClassLoader()).parseClass(loggerFile)
-File runLog = new File("E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\logs", "SwimmingRobot.log")
+File runLog = new File("[YOUR_WORKSPACE_PATH]/Out/TutorialOne/logs", "SwimmingRobot.log")
 def logger = loggerClass.newInstance("SwimmingRobotTutorial", runLog)
 
 try {
@@ -551,12 +551,12 @@ Act as a SysMLv2 modeling expert for the CATIA Magic Open API. Your task is to d
 ### Execution Requirements:
 - Wrap all model changes in a SessionManager transaction.
 - Use ElementsFactory from the selected Namespace in the containment tree.
-- Load and use the SysMLv2Logger utility with a dedicated log file at "E:\_Documents\git\TutorialForCatiaMagicApiMCP\logs\SwimmingRobot.log".
+- Load and use the SysMLv2Logger utility with a dedicated log file at "[YOUR_WORKSPACE_PATH]/Out/TutorialOne/logs/SwimmingRobot.log".
 - DO NOT use GStrings (e.g., "${var}"); use string concatenation or .toString().
 - Deploy and run the script via the Cameo Test Harness at http://localhost:8765/run.
 
 ### Validation Loop:
-1. Generate the script and save it to "C:\Users\DBR2\Desktop\SwimmingRobot\SwimmingRobot.groovy".
+1. Generate the script and save it to "[YOUR_WORKSPACE_PATH]/Out/TutorialOne/scripts/version<N>/SwimmingRobot.groovy".
 2. Trigger the /run endpoint on the test harness.
 3. Check the /status and tail the /log.
 4. If compilation or runtime errors occur (e.g., "unable to resolve class"), search the Javadoc via the MCP, fix the script, and re-run.

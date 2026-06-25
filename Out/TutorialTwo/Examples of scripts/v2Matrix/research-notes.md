@@ -10,7 +10,7 @@
 ### SysMLv2 Usage metaclasses — all under `com.dassault_systemes.modeler.sysml.model.sysml.*`
 
 | Simple name | Verified FQN |
-|---|---|
+| --- | --- |
 | `RequirementUsage` | `com.dassault_systemes.modeler.sysml.model.sysml.RequirementUsage` |
 | `SatisfyRequirementUsage` | `com.dassault_systemes.modeler.sysml.model.sysml.SatisfyRequirementUsage` |
 | `PartUsage` | `com.dassault_systemes.modeler.sysml.model.sysml.PartUsage` |
@@ -26,7 +26,7 @@
 ### KerML base metaclasses — under `com.dassault_systemes.modeler.kerml.model.kerml.*`
 
 | Simple name | Verified FQN |
-|---|---|
+| --- | --- |
 | `Namespace` | `…kerml.Namespace` |
 | `Element` | `…kerml.Element` |
 | `Feature` | `…kerml.Feature` |
@@ -45,7 +45,7 @@
 ### Cameo baseline (from the user's existing scripts) — all still valid
 
 | FQN | Use |
-|---|---|
+| --- | --- |
 | `com.nomagic.magicdraw.core.Application` | `getInstance().getProject()`, `getInstance().getMainFrame()` |
 | `com.nomagic.magicdraw.core.Project` | `getElementsFactory()`, tree root |
 | `com.nomagic.magicdraw.ui.browser.Browser` | selection read (FR-16 auto-launch) |
@@ -224,6 +224,7 @@ relying on `ok: true` alone.
 ## Iteration 1 API discoveries (probe scripts, SysMLv2 element creation)
 
 ### Factory access
+
 - `project.getElementsFactory()` returns `com.nomagic.uml2.SmartElementsFactory` — **NOT** the SysML factory.
 - `com.dassault_systemes.modeler.sysml.model.sysml.SysMLFactory.eINSTANCE` is the correct singleton.
   Returns `SysMLFactoryImpl` with 140+ `create*()` methods.
@@ -232,11 +233,13 @@ relying on `ok: true` alone.
 - KerML and UML2 Element hierarchies are **separate** — `ModelElementsManager.addElement()` (which takes `mdkernel.Element`) cannot accept SysMLv2 elements.
 
 ### Naming
+
 - `element.setDeclaredName(String)` — from `kerml.Element`; this is the naming API.
 - `element.getHumanName()` reflects the declared name: returns `"RequirementUsage TestR1"` after `setDeclaredName("TestR1")`.
 - `element.setName()` does **not** exist on SysMLv2 elements.
 
 ### Ownership
+
 - `element.setOwner(namespace)` works inside a `SessionManager` session.
 - To make P6 own Q: `q.setOwner(p6)` — Q becomes a sub-feature of P6.
 
@@ -245,6 +248,7 @@ relying on `ok: true` alone.
 **Correct wiring: `ReferenceSubsetting` (SysMLv2 `:>` operator), NOT `FeatureTyping` (`:`).**
 
 SysMLv2 textual notation distinguishes:
+
 ```sysml
 part P1 {
     ref satisfy requirement S_P1_R1a :> R1;  // ':>' = Subsetting (CORRECT)
@@ -255,6 +259,7 @@ part P3 {
 ```
 
 The `:>` form creates a `ReferenceSubsetting` relationship where:
+
 - `subsettingFeature` = the satisfy element (`S_P1_R1a`)
 - `subsettedFeature` = the target requirement (`R1`)
 
@@ -264,6 +269,7 @@ FeatureTyping (as iteration 1 did) makes the derived getter return self.
 Using ReferenceSubsetting makes it return the subsetted RequirementUsage.
 
 **Fixed fixture builder pattern (iteration 2+)**:
+
 ```groovy
 def s = factory.createSatisfyRequirementUsage()
 s.setOwner(part)
@@ -274,9 +280,11 @@ rs.setSubsettedFeature(req)
 ```
 
 ### SatisfyRequirementUsage — derivation caveats (iteration 1 runtime tests)
+
 - **No `setSatisfiedRequirement()` setter exists.** `getSatisfiedRequirement()` is derived.
 - **No `setSatisfyingFeature()` setter exists.** `getSatisfyingFeature()` is derived.
 - **Runtime test results** with a fixture created programmatically:
+
   ```
   satisfy.getOwner()                  → P1        (correct — we called setOwner)
   satisfy.getSatisfyingFeature()      → null      (unexpected — derivation returns null)
@@ -284,8 +292,10 @@ rs.setSubsettedFeature(req)
   satisfy.getOwnedTyping()            → [FT: type=R1]  (correct — our FeatureTyping is registered)
   satisfy.getType()                   → [RequirementCheck]  (doesn't include R1)
   ```
+
 - **Conclusion**: Cameo's implementation of `getSatisfiedRequirement()` does NOT read from our programmatically-added `FeatureTyping.type`. It likely expects a different wiring (possibly `ReferenceSubsetting`, or direct EMF reference via an internal EReference). For user-authored SysMLv2 written as `satisfy req R1 by P1`, Cameo's textual compiler uses that different wiring.
 - **Matrix-code contract (MatrixModel.groovy)**: use a two-step fallback when querying a SatisfyRequirementUsage:
+
   ```groovy
   RequirementUsage resolveSatisfiedRequirement(SatisfyRequirementUsage s) {
       def r = s.getSatisfiedRequirement()
@@ -298,10 +308,12 @@ rs.setSubsettedFeature(req)
       return f != null ? f : s.getOwner()
   }
   ```
+
   The second fallback (`getOwner()`) matches the existing pattern in
   `scripts/RequirementSatisfyMatrixGraphics.groovy`.
 
 ### SubjectMembership (FR-7) — caveat from iteration-1 testing
+
 - `factory.createSubjectMembership()` works; `subjM.setOwner(r7)` works.
 - **`subjM.setMemberElement(p2)` TRANSFERS OWNERSHIP** of p2 out of its original container (despite what the method name suggests). Runtime evidence: TF1's `ownedMember` list lost P2 after this call. Do NOT use `setMemberElement` to reference an element owned elsewhere.
 - `subjM.setOwnedSubjectParameter(p2)` also transfers ownership (method name is honest about this).
@@ -309,6 +321,7 @@ rs.setSubsettedFeature(req)
 - For iteration 1 the fixture builder creates an **empty** SubjectMembership on R7; FR-7 is deferred until we verify the ReferenceSubsetting pattern.
 
 ### Project model root
+
 - For DST-native SysMLv2 projects: `project.getModel()`, `project.getPrimaryModel()`, `project.getModels()` all return null/empty.
 - `project.getModels()` returns `Collections.emptyList()` (immutable).
 - The browser root contains `IPrimaryProject` / `ILockableProject` nodes — not KerML Namespace.
@@ -328,7 +341,7 @@ The user's edits to requirements.md created three entries numbered
 `FR-5`. The agreed correction:
 
 | Old | New | What it says |
-|---|---|---|
+| --- | --- | --- |
 | first FR-5 (inserted after FR-3) | **FR-3b** | Element-type filter for *relationship* kind |
 | second FR-5 ("Scope per axis") | **FR-4** | (restores the intended FR-4) |
 | third FR-5 ("Relationship-kind selector") | **FR-5** | (unchanged) |

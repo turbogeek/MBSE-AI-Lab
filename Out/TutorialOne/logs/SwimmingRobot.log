@@ -1,14 +1,14 @@
-2026-05-12 17:37:06.978 [INFO] Initializing model generation...
-2026-05-12 17:37:07.076 [INFO] Created Package: Swimming Robot
-2026-05-12 17:37:07.115 [INFO] Created Requirement: REQ-1 (Swimming Robot)
-2026-05-12 17:37:07.139 [INFO] Created Part Definition: Swimming Robot
-2026-05-12 17:37:07.238 [INFO] Created Part Usage: robot1
-2026-05-12 17:37:07.342 [INFO] Created Attribute: cost = 500.0
-2026-05-12 17:37:07.387 [INFO] Created Satisfaction: robot1 satisfies REQ-1
-2026-05-12 17:37:07.387 [INFO] --- Model Validation Summary ---
-2026-05-12 17:37:07.396 [INFO] Requirement: Requirement REQ-1 [Doc: The robot shall be able to swim in a pool.]
-2026-05-12 17:37:07.398 [INFO] Definition: Part Def Swimming Robot
-2026-05-12 17:37:07.402 [INFO] Usage: Part robot1 (Typed by: Swimming Robot)
-2026-05-12 17:37:07.417 [INFO] Attribute: Attribute cost = 500.0
-2026-05-12 17:37:07.417 [INFO] Allocation/Satisfy created successfully.
-2026-05-12 17:37:07.418 [INFO] ---------------------------------
+2026-06-25 14:22:15.605 [INFO] Initializing model generation (version 3)...
+2026-06-25 14:22:15.670 [INFO] Created Package: Swimming Robot
+2026-06-25 14:22:15.710 [INFO] Created Requirement: REQ-1 (Swimming Robot)
+2026-06-25 14:22:15.726 [INFO] Created Part Definition: Swimming Robot
+2026-06-25 14:22:15.751 [INFO] Created Part Usage: robot1
+2026-06-25 14:22:15.827 [INFO] Created Attribute: cost = 500.0
+2026-06-25 14:22:15.852 [INFO] Created Satisfaction: robot1 satisfies REQ-1
+2026-06-25 14:22:15.854 [INFO] --- Model Validation Summary ---
+2026-06-25 14:22:15.856 [INFO] Requirement: Requirement REQ-1 [Doc: The robot shall be able to swim in a pool.]
+2026-06-25 14:22:15.858 [INFO] Definition: Part Def Swimming Robot
+2026-06-25 14:22:15.859 [INFO] Usage: Part robot1 (Typed by: Swimming Robot)
+2026-06-25 14:22:15.861 [INFO] Attribute: Attribute cost = 500.0
+2026-06-25 14:22:15.862 [INFO] Allocation/Satisfy created successfully.
+2026-06-25 14:22:15.864 [INFO] ---------------------------------

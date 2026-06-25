@@ -97,13 +97,14 @@ Donald Rumsfeld
 
 > [!IMPORTANT]
 > When the LLM makes mistakes (or you do):
+>
 > - Change the requirements and or the plan (the LLM can help)
 > - Change the skill/agent files when there are hallucinations (the LLM can help here too)  
 >
 
 ### iterate to complete and test the script
 
-8. Project Setup
+1. Project Setup
 
 Follow these steps to replicate the AI's environment:
 

@@ -25,10 +25,10 @@ import java.util.ArrayList
 // (both direct and implied), using custom Java2D Graphics rendering on a JPanel canvas.
 // -----------------------------------------------------------------------------------
 
-String scriptDir = "E:\\_Documents\\git\\SysMLv2ClientAPI\\scripts"
+String scriptDir = "[YOUR_WORKSPACE_PATH]/scripts"
 File loggerFile = new File(scriptDir, "SysMLv2Logger.groovy")
 def SysMLv2Logger = new GroovyClassLoader(getClass().getClassLoader()).parseClass(loggerFile)
-File runLog = new File("E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\Tutorials\\TutorialTwo\\logs", "SatisfyMatrix.log")
+File runLog = new File("[YOUR_WORKSPACE_PATH]/Out/TutorialTwo/logs", "SatisfyMatrix.log")
 // Ensure log directory exists
 runLog.getParentFile().mkdirs()
 def logger = SysMLv2Logger.newInstance("SatisfyMatrixGUI", runLog)

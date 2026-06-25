@@ -27,7 +27,7 @@ import java.util.ArrayList
 // and adheres to all prompt instructions (SessionManager, Logger, LiteralRational).
 // -----------------------------------------------------------------------------------
 
-File loggerFile = new File("E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\scripts\\SysMLv2Logger.groovy")
+File loggerFile = new File("[YOUR_WORKSPACE_PATH]/scripts/SysMLv2Logger.groovy")
 if (!loggerFile.exists()) {
     println("Could not find logger at " + loggerFile.getAbsolutePath())
     return

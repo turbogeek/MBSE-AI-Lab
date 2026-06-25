@@ -14,7 +14,7 @@
 ## 1. Goals
 
 | ID | Goal |
-|----|------|
+| ---- | ------ |
 | **G-1** | Build a usable read-only Satisfy matrix Swing tool that runs inside Cameo against a SysMLv2 model. |
 | **G-2** | Teach the reader the SysMLv2 API surface — `sysml.*` + `kerml.*` — through concrete, idiomatic code. |
 | **G-3** | Teach how SysMLv2 **Satisfy** is modeled: direct `SatisfyRequirementUsage` and implied via feature hierarchy. |
@@ -72,6 +72,7 @@ between the same (row, col) pair, the indicator carries a count badge.
 
 **FR-7. Cell annotations.** The script shall render these annotations
 when toggled on:
+
 - Implied-vs-direct styling (distinct color, shape, or dash).
 *Acceptance:* Toggling "Show implied" produces a visibly different rendering for implied cells in TF-1 compared to direct satisfaction cells.
 
@@ -90,6 +91,7 @@ containment tree with the matrix still visible.
 the user can select other elements while the dialog is open.
 
 **FR-10. Cell interactions.** The dialog shall support:
+
 - Single-click on a filled cell → open the backing relationship element
   in the containment tree.
 *Acceptance:* Clicking a cell selects the corresponding `SatisfyRequirementUsage` in the containment tree.
@@ -126,7 +128,7 @@ on start per the `dedicated-log-file` pattern.
 ## 3. Non-functional requirements
 
 | ID | Requirement |
-|----|-------------|
+| ---- | ------------- |
 | **NFR-1** | No `System.exit`, no `Runtime.halt`. Dialog close → `dispose()`. |
 | **NFR-2** | No GStrings at Cameo API boundaries; enforced by the MCP validator's lint. |
 | **NFR-3** | Render a 500×500 matrix from TF-1 in ≤5 s on the reference workstation. Above 500×500, show a confirm dialog before building. |
@@ -157,7 +159,7 @@ Each **OQ** must be resolved before the corresponding requirement can be
 planned.
 
 | ID | Question |
-|---|---|
+| --- | --- |
 | **OQ-1** | For **TF-1**: do you have an existing SysMLv2 file we can use, or should the plan include building one? If building: target counts for N/M/K/L? |
 | **OQ-2** | "Standard libraries" for scope filtering (FR-3 default): is the rule "Namespace is not under root package named `SysML`, `KerML`, `Standard`, or any user-listed customization" good enough, or do you want a user-editable exclusion list? |
 | **OQ-3** | Launch ergonomics (FR-13): is "open .groovy in script console and run" acceptable for MVP, or is a menu action a must-have? |

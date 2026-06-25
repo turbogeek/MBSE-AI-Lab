@@ -14,7 +14,7 @@
 ## 1. Goals
 
 | ID | Goal |
-|----|------|
+| ---- | ------ |
 | **G-1** | Build a usable traceability matrix Swing tool that runs inside Cameo against a SysMLv2 model (local or Teamwork-Cloud-hosted). |
 | **G-2** | Teach the reader the SysMLv2 API surface — `sysml.*` + `kerml.*` — through concrete, idiomatic code. |
 | **G-3** | Teach how SysMLv2 **Satisfy** is modeled: direct `SatisfyRequirementUsage`, implied via feature hierarchy, and subject-based inference. |
@@ -69,11 +69,11 @@ full dialog restart. Default scope hides every element under a
 "Any") for the matrix. Kinds are grouped:
 
 | Group | Kinds |
-|---|---|
-| End-based  | `Dependency`, `Succession`, `Transition`, `Connection`, `Flow` |
+| --- | --- |
+| End-based | `Dependency`, `Succession`, `Transition`, `Connection`, `Flow` |
 | Specialized usage | `SatisfyRequirementUsage`, `AllocationUsage`, `ExhibitStateUsage`, `PerformActionUsage` |
 | Structural | `FeatureMembership`, `PartOwnership`, `NamespaceOwnership` |
-| Derived    | *subject-based* (FR-7), *implied* (FR-6) |
+| Derived | *subject-based* (FR-7), *implied* (FR-6) |
 
 *Acceptance:* Switching the selector changes which cells are filled on
 TF-1 according to the group's semantics; "Any" is the union.
@@ -112,6 +112,7 @@ requirement side (axes swapped), it runs upper-left → lower-right.
 
 **FR-10. Cell annotations.** The script shall render these annotations
 when toggled on:
+
 - Multiplicity marker (circle around the arrow) when the relationship is
   1:many or many:1.
 - Implied-vs-direct styling (distinct color or dash).
@@ -143,6 +144,7 @@ containment tree with the matrix still visible.
 the user can select other elements while the dialog is open.
 
 **FR-12. Cell interactions.** The dialog shall support:
+
 - Single-click on a filled cell → open the backing relationship element
   in the containment tree.
 - Double-click on a filled cell → prompt to **delete** the relationship
@@ -216,7 +218,7 @@ on start per the `dedicated-log-file` pattern.
 ## 3. Non-functional requirements
 
 | ID | Requirement |
-|----|-------------|
+| ---- | ------------- |
 | **NFR-1** | No `System.exit`, no `Runtime.halt`. Dialog close → `dispose()`. |
 | **NFR-2** | No GStrings at Cameo API boundaries; enforced by the MCP validator's lint. |
 | **NFR-3** | All model mutations (FR-12 delete/create, FR-15 save) run inside one `SessionManager` session with `cancelSession` on exception. |
@@ -254,7 +256,7 @@ planned. I'll ask the top few via a direct prompt; the rest can be
 answered asynchronously by editing this doc.
 
 | ID | Question |
-|---|---|
+| --- | --- |
 | **OQ-1** | When `kind = Any` (FR-5) and multiple kinds connect the same (row, col), does the cell show one aggregated arrow (with a count) or one badge per kind? |
 | **OQ-2** | What metaclass represents a **saved matrix view** (FR-15)? Options: (a) a new stereotype `«MatrixView»` on a Namespace, (b) a `ViewUsage` with tagged values, (c) a JSON blob attached as a Comment / fileAttachment, (d) other. |
 | **OQ-3** | For **TF-1**: do you have an existing SysMLv2 file we can use, or should the plan include building one? If building: target counts for N/M/K/L and how many subject-based requirements? |

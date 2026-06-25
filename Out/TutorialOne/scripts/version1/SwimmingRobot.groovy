@@ -10,14 +10,14 @@ import com.nomagic.magicdraw.openapi.uml.SessionManager
 import java.util.Arrays
 
 // Logger setup
-String scriptDir = "E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\scripts"
+String scriptDir = "[YOUR_WORKSPACE_PATH]/scripts"
 File loggerFile = new File(scriptDir, "SysMLv2Logger.groovy")
 if (!loggerFile.exists()) {
     System.err.println("Logger file not found: " + loggerFile.getAbsolutePath())
     return
 }
 def loggerClass = new GroovyClassLoader(getClass().getClassLoader()).parseClass(loggerFile)
-File runLog = new File("E:\\_Documents\\git\\TutorialForCatiaMagicApiMCP\\Tutorials\\TutorialOne\\logs", "SwimmingRobot.log")
+File runLog = new File("[YOUR_WORKSPACE_PATH]/Out/TutorialOne/logs", "SwimmingRobot.log")
 if (!runLog.getParentFile().exists()) {
     runLog.getParentFile().mkdirs()
 }

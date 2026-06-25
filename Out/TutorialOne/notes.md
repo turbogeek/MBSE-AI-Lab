@@ -49,7 +49,6 @@ There are script in the folder, "test harness", which will provide the LLM with 
 
 ### The "Swimming Robot" Automation Prompt
 
-
 ```text
 Act as a SysMLv2 modeling expert for the CATIA Magic Open API with expertise in theGroovy Language, Java, the SysMLv2 standard, and the Cameo API. Your task is to develop, test, and validate a Groovy script that will show a Satisfy matrix with the given requirements and architecture in this file: "TutorialOne\TutorialTwo\requirements.md".
 
@@ -57,12 +56,12 @@ Act as a SysMLv2 modeling expert for the CATIA Magic Open API with expertise in 
 ### Execution Requirements:
 - Wrap all model changes in a SessionManager transaction.
 - Use ElementsFactory from the selected Namespace in the containment tree.
-- Load and use the SysMLv2Logger utility with a dedicated log file at "E:\_Documents\git\TutorialForCatiaMagicApiMCP\logs\SwimmingRobot.log".
+- Load and use the SysMLv2Logger utility with a dedicated log file at "[YOUR_WORKSPACE_PATH]/Out/TutorialOne/logs/SwimmingRobot.log".
 - DO NOT use GStrings (e.g., "${var}"); use string concatenation or .toString().
 - Deploy and run the script via the Cameo Test Harness at http://localhost:8765/run.
 
 ### Validation Loop:
-1. Generate the script and save it to "C:\Users\DBR2\Desktop\SwimmingRobot\SwimmingRobot.groovy".
+1. Generate the script and save it to "[YOUR_WORKSPACE_PATH]/Out/TutorialOne/scripts/version<N>/SwimmingRobot.groovy".
 2. Trigger the /run endpoint on the test harness.
 3. Check the /status and tail the /log.
 4. If compilation or runtime errors occur (e.g., "unable to resolve class"), search the Javadoc via the MCP, fix the script, and re-run.
@@ -79,20 +78,17 @@ There are known knowns. These are things we know that we know. There are known u
 
 Donald Rumsfeld
 
-
 > [!IMPORTANT}
 > When the LLM makes mistakes (or you do):
-> -Change the requirements and or the plan 
+> -Change the requirements and or the plan
 > -Change the  skill/agent files when there are hallucination  
 >
 
-
 ### iterate to complete and test the script
-
 
 ## Project Setup
 
-- Repository: [TutorialForCatiaMagicApiMCP](file:///e:/_Documents/git/TutorialForCatiaMagicApiMCP)
+- Repository: [MBSE-AI-Lab](https://github.com/turbogeek/MBSE-AI-Lab)
 - MCP Server Config: `MCP4MagicAPI`
 
 ## Key Concepts

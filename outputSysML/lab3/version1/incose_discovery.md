@@ -37,6 +37,11 @@ The toaster interacts with the following external elements:
 - **REQ7 - Connectivity:** The toaster shall include Wi-Fi connectivity to download specialized toasting profiles from partner bakeries.
 - **REQ8 - Touchscreen UI:** The toaster shall feature a touchscreen interface for users to select bread types, browning levels, and custom profiles.
 - **REQ9 - Repairability:** The toaster shall be designed with modular, easily replaceable heating elements and control boards to facilitate end-user repair.
+- **REQ10 - Energy Efficiency:** The toaster shall be energy efficient and consume no more than 1500W.
+- **REQ11 - Fire Safety:** The toaster shall be safe to use and not pose a fire hazard.
+- **REQ12 - Durability:** The toaster shall be durable and long-lasting.
+- **REQ13 - Ease of Use:** The toaster shall be easy to use and understand.
+- **REQ14 - Aesthetics:** The toaster shall be aesthetically pleasing and fit in well with other kitchen appliances.
 
 ## 5. Logical Architecture
 
@@ -47,6 +52,8 @@ The toaster interacts with the following external elements:
 - **Safety Subsystem:** Ensures the toaster operates within safe temperature limits and prevents electrical hazards.
 - **Optical Sensing Subsystem:** Monitors the color and surface temperature of the bread in real-time.
 - **Connectivity Subsystem:** Manages Wi-Fi connections and communication with cloud services for profile downloads.
+**Government Regulator:** Electrical Safety, Fire Prevention.
+**Government Environmentalist:** Energy Efficiency, Recyclability.
 
 ## 6. Views
 

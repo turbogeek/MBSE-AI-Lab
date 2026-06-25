@@ -1,4 +1,4 @@
-package ToasterModel {
+package ToasterModel_v2 {
     package Stakeholders {
         part def Stakeholder;
         
@@ -22,6 +22,15 @@ package ToasterModel {
         
         part repairabilityPartner : Stakeholder {
             concern modular_design_concern;
+        }
+
+        part governmentRegulator : Stakeholder {
+            concern safety_prevention_concern;
+        }
+
+        part governmentEnvironmentalist : Stakeholder {
+            concern energy_efficiency_concern;
+            concern recyclability_concern;
         }
     }
     
@@ -73,6 +82,31 @@ package ToasterModel {
             frame Stakeholders::repairabilityPartner.modular_design_concern;
         }
 
+        requirement def <REQ10> 'Energy Efficiency Requirement' {
+            doc /* The toaster shall be energy efficient and consume no more than 1500W. */
+            frame Stakeholders::governmentEnvironmentalist.energy_efficiency_concern;
+        }
+
+        requirement def <REQ11> 'Fire Safety Requirement' {
+            doc /* The toaster shall be safe to use and not pose a fire hazard. */
+            frame Stakeholders::governmentRegulator.safety_prevention_concern;
+        }
+
+        requirement def <REQ12> 'Durability Requirement' {
+            doc /* The toaster shall be durable and long-lasting. */
+            frame Stakeholders::consumer.performance_concern;
+        }
+
+        requirement def <REQ13> 'Ease of Use Requirement' {
+            doc /* The toaster shall be easy to use and understand. */
+            frame Stakeholders::consumer.performance_concern;
+        }
+
+        requirement def <REQ14> 'Aesthetics Requirement' {
+            doc /* The toaster shall be aesthetically pleasing and fit in well with other kitchen appliances. */
+            frame Stakeholders::consumer.performance_concern;
+        }
+
         requirement <REQ1> heatingReq : 'Heating Requirement';
         requirement <REQ2> powerReq : 'Power Consumption Requirement';
         requirement <REQ3> timerReq : 'Timer Requirement';
@@ -82,16 +116,23 @@ package ToasterModel {
         requirement <REQ7> connectivityReq : 'Connectivity Requirement';
         requirement <REQ8> touchscreenReq : 'Touchscreen UI Requirement';
         requirement <REQ9> repairabilityReq : 'Repairability Requirement';
+        requirement <REQ10> energyEfficiencyReq : 'Energy Efficiency Requirement';
+        requirement <REQ11> fireSafetyReq : 'Fire Safety Requirement';
+        requirement <REQ12> durabilityReq : 'Durability Requirement';
+        requirement <REQ13> easeOfUseReq : 'Ease of Use Requirement';
+        requirement <REQ14> aestheticsReq : 'Aesthetics Requirement';
     }
     
     package LogicalArchitecture {
         part def PowerSubsystem {
             satisfy Requirements::powerReq;
+            satisfy Requirements::energyEfficiencyReq;
         }
         
         part def ControlSubsystem {
             satisfy Requirements::timerReq;
             satisfy Requirements::touchscreenReq;
+            satisfy Requirements::easeOfUseReq;
         }
         
         part def HeatingSubsystem {
@@ -101,10 +142,12 @@ package ToasterModel {
         part def MechanicalSubsystem {
             satisfy Requirements::popupReq;
             satisfy Requirements::repairabilityReq;
+            satisfy Requirements::durabilityReq;
         }
 
         part def SafetySubsystem {
             satisfy Requirements::safetyReq;
+            satisfy Requirements::fireSafetyReq;
         }
 
         part def OpticalSensingSubsystem {
@@ -116,6 +159,8 @@ package ToasterModel {
         }
 
         part def Toaster {
+            satisfy Requirements::aestheticsReq;
+            
             part powerSubsystem : PowerSubsystem;
             part controlSubsystem : ControlSubsystem;
             part heatingSubsystem : HeatingSubsystem;
@@ -148,5 +193,4 @@ package ToasterModel {
             part carriageMechanism;
         }
     }
-    
 }
