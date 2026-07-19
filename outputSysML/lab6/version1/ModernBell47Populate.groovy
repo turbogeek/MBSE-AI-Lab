@@ -847,6 +847,7 @@ try {
 
         if (sessionCreated) {
             SessionManager.getInstance().closeSession(project)
+            sessionCreated = false
             logger.info("Advanced Model population complete and session closed successfully.")
         }
 
