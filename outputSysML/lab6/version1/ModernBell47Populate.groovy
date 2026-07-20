@@ -233,8 +233,10 @@ try {
         def reqFatigue = createRequirement(sysReqsPkg, "REQ-04", "REQ_Fatigue", "Primary structural parts of the anti-torque drive system shall be designed for a minimum fatigue life of 5,000 flight hours.")
         def reqElecBackup = createRequirement(sysReqsPkg, "REQ-05", "REQ_Elec_Backup", "The electric tail rotor system shall include a backup battery system capable of supplying operational yaw thrust power for at least 7 to 10 minutes (matching/exceeding max autorotative descent duration).")
         def reqThermal = createRequirement(sysReqsPkg, "REQ-06", "REQ_Thermal_Safety", "The battery subsystem shall comply with FAA Special Conditions, demonstrating that a thermal runaway event in any single cell will not propagate.")
-        def reqClutch = createRequirement(sysReqsPkg, "REQ-07", "REQ_Mech_Clutch", "The mechanical tail rotor driveshaft shall be connected downstream of the freewheeling clutch for synchronization in autorotation.")
-        def reqLubrication = createRequirement(sysReqsPkg, "REQ-08", "REQ_Lubrication", "The tail rotor gearboxes shall be designed to operate for at least 30 minutes after loss of lubrication.")
+        def reqRedundantPower = createRequirement(sysReqsPkg, "REQ-07", "REQ_Redundant_Power", "The electrical architecture shall feature dual redundant power distribution lines and dual motor windings to ensure yaw control is maintained despite a single wiring or winding failure.")
+        def reqClutch = createRequirement(sysReqsPkg, "REQ-08", "REQ_Mech_Clutch", "The mechanical tail rotor driveshaft shall be connected downstream of the freewheeling clutch for synchronization in autorotation.")
+        def reqLubrication = createRequirement(sysReqsPkg, "REQ-09", "REQ_Lubrication", "The tail rotor gearboxes shall be designed to operate for at least 30 minutes after loss of lubrication.")
+        def reqShielding = createRequirement(sysReqsPkg, "REQ-10", "REQ_Driveshaft_Shielding", "The mechanical tail boom driveshaft shall be shielded to prevent damage from whipping or blade strikes in the event of a shaft coupling failure.")
 
         // Subsystem level
         def reqFcs = createRequirement(fcsReqsPkg, "REQ-FCS-01", "REQ_FCS_Latency", "The flight controller yaw command processing latency shall be less than 50 milliseconds.")
@@ -337,7 +339,9 @@ try {
         createTestCase("Test_YawAuthority", reqSafety)
         createTestCase("Test_BatteryDuration", reqElecBackup)
         createTestCase("Test_ThermalRunaway", reqThermal)
+        createTestCase("Test_PowerRedundancy", reqRedundantPower)
         createTestCase("Test_GearboxRunDry", reqLubrication)
+        createTestCase("Test_DriveshaftShielding", reqShielding)
 
         // General Use Cases
         def useCaseNames = [
@@ -672,10 +676,12 @@ try {
         createSatisfyRelationship(antiTorqueBlock, reqLubrication)
         createSatisfyRelationship(epsBlock, reqElecBackup)
         createSatisfyRelationship(epsBlock, reqThermal)
+        createSatisfyRelationship(epsBlock, reqRedundantPower)
         createSatisfyRelationship(epsBlock, reqEps)
         createSatisfyRelationship(flightControllerBlock, reqFcs)
         createSatisfyRelationship(powertrainBlock, reqClutch)
         createSatisfyRelationship(powertrainBlock, reqPwr)
+        createSatisfyRelationship(powertrainBlock, reqShielding)
 
         // 9. Interface Blocks & Flow Properties
         Stereotype interfaceBlockStereotype = StereotypesHelper.getStereotype(project, "InterfaceBlock", sysmlProfile)

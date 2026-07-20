@@ -1,95 +1,104 @@
-2026-07-18 20:27:38.397 [INFO] Starting Full-Fidelity Modern Bell 47 model population (SysMLv1)...
-2026-07-18 20:27:38.400 [INFO] Target Root Package: Model
-2026-07-18 20:27:38.497 [INFO] Created: 1. Stakeholders
-2026-07-18 20:27:38.500 [INFO] Created: 4. Logical Architecture
-2026-07-18 20:27:38.501 [INFO] Created: 5. Physical Architecture
-2026-07-18 20:27:38.515 [INFO] Created Stakeholder: Bell Helicopter Design Team
-2026-07-18 20:27:38.518 [INFO] Created Stakeholder: FAA Certifying Authority
-2026-07-18 20:27:38.520 [INFO] Created Stakeholder: Helicopter Operator
-2026-07-18 20:27:38.530 [INFO] Created Requirement: REQ-01 - REQ_Cap
-2026-07-18 20:27:38.535 [INFO] Created Requirement: REQ-02 - REQ_Engine
-2026-07-18 20:27:38.539 [INFO] Created Requirement: REQ-03 - REQ_Part27_Safety
-2026-07-18 20:27:38.545 [INFO] Created Requirement: REQ-04 - REQ_Fatigue
-2026-07-18 20:27:38.548 [INFO] Created Requirement: REQ-05 - REQ_Elec_Backup
-2026-07-18 20:27:38.550 [INFO] Created Requirement: REQ-06 - REQ_Thermal_Safety
-2026-07-18 20:27:38.552 [INFO] Created Requirement: REQ-07 - REQ_Mech_Clutch
-2026-07-18 20:27:38.554 [INFO] Created Requirement: REQ-08 - REQ_Lubrication
-2026-07-18 20:27:38.557 [INFO] Created Requirement: REQ-FCS-01 - REQ_FCS_Latency
-2026-07-18 20:27:38.559 [INFO] Created Requirement: REQ-EPS-01 - REQ_EPS_Capacity
-2026-07-18 20:27:38.562 [INFO] Created Requirement: REQ-PWR-01 - REQ_PWR_Efficiency
-2026-07-18 20:27:38.573 [INFO] Created Test Case: Test_YawAuthority (Verifies REQ_Part27_Safety)
-2026-07-18 20:27:38.766 [INFO]   Created and populated Activity Diagram: Test_YawAuthority Flow
-2026-07-18 20:27:38.770 [INFO] Created Test Case: Test_BatteryDuration (Verifies REQ_Elec_Backup)
-2026-07-18 20:27:38.800 [INFO]   Created and populated Activity Diagram: Test_BatteryDuration Flow
-2026-07-18 20:27:38.804 [INFO] Created Test Case: Test_ThermalRunaway (Verifies REQ_Thermal_Safety)
-2026-07-18 20:27:38.833 [INFO]   Created and populated Activity Diagram: Test_ThermalRunaway Flow
-2026-07-18 20:27:38.840 [INFO] Created Test Case: Test_GearboxRunDry (Verifies REQ_Lubrication)
-2026-07-18 20:27:38.872 [INFO]   Created and populated Activity Diagram: Test_GearboxRunDry Flow
-2026-07-18 20:27:38.881 [INFO] Created Use Cases (38 items)
-2026-07-18 20:27:38.885 [INFO] Created block: Modern Bell 47
-2026-07-18 20:27:38.895 [INFO] Allocated Part: engine under Modern Bell 47
-2026-07-18 20:27:38.898 [INFO] Allocated Part: mainrotor under Modern Bell 47
-2026-07-18 20:27:38.903 [INFO] Allocated Part: cabin under Modern Bell 47
-2026-07-18 20:27:38.907 [INFO] Allocated Part: flightcontroller under Modern Bell 47
-2026-07-18 20:27:38.911 [INFO] Allocated Part: anti-torquesubsystem under Modern Bell 47
-2026-07-18 20:27:38.914 [INFO] Allocated Part: electricalpowersubsystem under Modern Bell 47
-2026-07-18 20:27:38.919 [INFO] Allocated Part: powertrainsubsystem under Modern Bell 47
-2026-07-18 20:27:38.950 [INFO] Created Operation: ExecuteFlightMission under Modern Bell 47
-2026-07-18 20:27:38.953 [INFO] Created Operation: PerformEmergencyLanding under Modern Bell 47
-2026-07-18 20:27:38.957 [INFO] Created Operation: CounterMainRotorTorque under Anti-Torque Subsystem
-2026-07-18 20:27:38.960 [INFO] Created Operation: RegulateBackupPower under Electrical Power Subsystem
-2026-07-18 20:27:38.964 [INFO] Created Operation: TransmitTorque under Powertrain Subsystem
-2026-07-18 20:27:38.991 [INFO] Created State Machine: System State Machine under Modern Bell 47
-2026-07-18 20:27:39.022 [INFO]   Created and populated State Machine Diagram: System State Machine Diagram
-2026-07-18 20:27:39.029 [INFO] Created State Machine: EPS State Machine under Electrical Power Subsystem
-2026-07-18 20:27:39.058 [INFO]   Created and populated State Machine Diagram: EPS State Machine Diagram
-2026-07-18 20:27:39.063 [INFO] Created State Machine: Engine State Machine under Engine
-2026-07-18 20:27:39.095 [INFO]   Created and populated State Machine Diagram: Engine State Machine Diagram
-2026-07-18 20:27:39.100 [INFO] Created State Machine: Rotor State Machine under Main Rotor
-2026-07-18 20:27:39.136 [INFO]   Created and populated State Machine Diagram: Rotor State Machine Diagram
-2026-07-18 20:27:39.140 [INFO] Created State Machine: FCS State Machine under Flight Controller
-2026-07-18 20:27:39.165 [INFO]   Created and populated State Machine Diagram: FCS State Machine Diagram
-2026-07-18 20:27:39.179 [INFO] Created Alternative: CATL NMC Lithium-Ion Pack -> Physical Battery Pack
-2026-07-18 20:27:39.183 [INFO] Created Alternative: Advanced Solid-State Pack -> Physical Battery Pack
-2026-07-18 20:27:39.186 [INFO] Created Alternative: Traditional Aluminum Driveshafts -> Drivetrain Component
-2026-07-18 20:27:39.192 [INFO] Created Alternative: Composite Carbon-Fiber Driveshafts -> Drivetrain Component
-2026-07-18 20:27:39.198 [INFO] Created Satisfy Relationship: Modern Bell 47 -> REQ_Cap
-2026-07-18 20:27:39.201 [INFO] Created Satisfy Relationship: Modern Bell 47 -> REQ_Engine
-2026-07-18 20:27:39.203 [INFO] Created Satisfy Relationship: Anti-Torque Subsystem -> REQ_Part27_Safety
-2026-07-18 20:27:39.206 [INFO] Created Satisfy Relationship: Anti-Torque Subsystem -> REQ_Fatigue
-2026-07-18 20:27:39.207 [INFO] Created Satisfy Relationship: Anti-Torque Subsystem -> REQ_Lubrication
-2026-07-18 20:27:39.209 [INFO] Created Satisfy Relationship: Electrical Power Subsystem -> REQ_Elec_Backup
-2026-07-18 20:27:39.211 [INFO] Created Satisfy Relationship: Electrical Power Subsystem -> REQ_Thermal_Safety
-2026-07-18 20:27:39.214 [INFO] Created Satisfy Relationship: Electrical Power Subsystem -> REQ_EPS_Capacity
-2026-07-18 20:27:39.216 [INFO] Created Satisfy Relationship: Flight Controller -> REQ_FCS_Latency
-2026-07-18 20:27:39.218 [INFO] Created Satisfy Relationship: Powertrain Subsystem -> REQ_Mech_Clutch
-2026-07-18 20:27:39.219 [INFO] Created Satisfy Relationship: Powertrain Subsystem -> REQ_PWR_Efficiency
-2026-07-18 20:27:39.232 [INFO] Created Interface Block: PowerFlow with Flow Property torque
-2026-07-18 20:27:39.239 [INFO] Created Interface Block: ElectricalFlow with Flow Property current
-2026-07-18 20:27:39.245 [INFO] Created Interface Block: ControlSignal with Flow Property yawCommand
-2026-07-18 20:27:39.253 [INFO]   Created ProxyPort: p_out_shaft on Engine
-2026-07-18 20:27:39.257 [INFO]   Created ProxyPort: p_in_shaft on Powertrain Subsystem
-2026-07-18 20:27:39.262 [INFO]   Created ProxyPort: p_out_main_rotor on Powertrain Subsystem
-2026-07-18 20:27:39.265 [INFO]   Created ProxyPort: p_out_tail_rotor on Powertrain Subsystem
-2026-07-18 20:27:39.269 [INFO]   Created ProxyPort: p_in_mech on Electrical Power Subsystem
-2026-07-18 20:27:39.273 [INFO]   Created ProxyPort: p_out_elec on Electrical Power Subsystem
-2026-07-18 20:27:39.275 [INFO]   Created ProxyPort: p_out_cmd on Flight Controller
-2026-07-18 20:27:39.278 [INFO]   Created ProxyPort: p_in_elec on Anti-Torque Subsystem
-2026-07-18 20:27:39.281 [INFO]   Created ProxyPort: p_in_mech on Anti-Torque Subsystem
-2026-07-18 20:27:39.285 [INFO]   Created ProxyPort: p_in_cmd on Anti-Torque Subsystem
-2026-07-18 20:27:39.296 [INFO] Created Port Connector: conn_engine_pwr between engine.p_out_shaft and powertrainsubsystem.p_in_shaft
-2026-07-18 20:27:39.298 [INFO] Created Port Connector: conn_pwr_generator between powertrainsubsystem.p_out_tail_rotor and electricalpowersubsystem.p_in_mech
-2026-07-18 20:27:39.300 [INFO] Created Port Connector: conn_elec_torque between electricalpowersubsystem.p_out_elec and anti-torquesubsystem.p_in_elec
-2026-07-18 20:27:39.301 [INFO] Created Port Connector: conn_fcs_cmd between flightcontroller.p_out_cmd and anti-torquesubsystem.p_in_cmd
-2026-07-18 20:27:39.308 [INFO] Created ConstraintBlock: TradeStudyCalculations with constraint mass_eq
-2026-07-18 20:27:39.311 [WARN] SimulationConfig stereotype not found, creating simulation placeholder block.
-2026-07-18 20:27:39.313 [WARN] Could not create Simulation Config Diagram via name 'Simulation Config Diagram', trying fallback 'Simulation Config'
-2026-07-18 20:27:39.317 [ERROR] Could not create simulation diagram via standard names. Creating a standard Class Diagram as placeholder.
+2026-07-19 23:34:54.154 [INFO] Starting Full-Fidelity Modern Bell 47 model population (SysMLv1)...
+2026-07-19 23:34:54.157 [INFO] Target Root Package: Model
+2026-07-19 23:34:54.294 [INFO] Created: 1. Stakeholders
+2026-07-19 23:34:54.295 [INFO] Created: 3. Use Cases
+2026-07-19 23:34:54.297 [INFO] Created: 4. Logical Architecture
+2026-07-19 23:34:54.299 [INFO] Created: 5. Physical Architecture
+2026-07-19 23:34:54.320 [INFO] Created Stakeholder: Bell Helicopter Design Team
+2026-07-19 23:34:54.329 [INFO] Created Stakeholder: FAA Certifying Authority
+2026-07-19 23:34:54.335 [INFO] Created Stakeholder: Helicopter Operator
+2026-07-19 23:34:54.346 [INFO] Created Requirement: REQ-01 - REQ_Cap
+2026-07-19 23:34:54.357 [INFO] Created Requirement: REQ-02 - REQ_Engine
+2026-07-19 23:34:54.364 [INFO] Created Requirement: REQ-03 - REQ_Part27_Safety
+2026-07-19 23:34:54.371 [INFO] Created Requirement: REQ-04 - REQ_Fatigue
+2026-07-19 23:34:54.381 [INFO] Created Requirement: REQ-05 - REQ_Elec_Backup
+2026-07-19 23:34:54.391 [INFO] Created Requirement: REQ-06 - REQ_Thermal_Safety
+2026-07-19 23:34:54.400 [INFO] Created Requirement: REQ-07 - REQ_Redundant_Power
+2026-07-19 23:34:54.408 [INFO] Created Requirement: REQ-08 - REQ_Mech_Clutch
+2026-07-19 23:34:54.414 [INFO] Created Requirement: REQ-09 - REQ_Lubrication
+2026-07-19 23:34:54.425 [INFO] Created Requirement: REQ-10 - REQ_Driveshaft_Shielding
+2026-07-19 23:34:54.432 [INFO] Created Requirement: REQ-FCS-01 - REQ_FCS_Latency
+2026-07-19 23:34:54.441 [INFO] Created Requirement: REQ-EPS-01 - REQ_EPS_Capacity
+2026-07-19 23:34:54.449 [INFO] Created Requirement: REQ-PWR-01 - REQ_PWR_Efficiency
+2026-07-19 23:34:54.474 [INFO] Created Test Case: Test_YawAuthority (Verifies REQ_Part27_Safety)
+2026-07-19 23:34:54.521 [INFO]   Created and populated Activity Diagram: Test_YawAuthority Flow
+2026-07-19 23:34:54.535 [INFO] Created Test Case: Test_BatteryDuration (Verifies REQ_Elec_Backup)
+2026-07-19 23:34:54.560 [INFO]   Created and populated Activity Diagram: Test_BatteryDuration Flow
+2026-07-19 23:34:54.571 [INFO] Created Test Case: Test_ThermalRunaway (Verifies REQ_Thermal_Safety)
+2026-07-19 23:34:54.596 [INFO]   Created and populated Activity Diagram: Test_ThermalRunaway Flow
+2026-07-19 23:34:54.609 [INFO] Created Test Case: Test_PowerRedundancy (Verifies REQ_Redundant_Power)
+2026-07-19 23:34:54.634 [INFO]   Created and populated Activity Diagram: Test_PowerRedundancy Flow
+2026-07-19 23:34:54.665 [INFO] Created Test Case: Test_GearboxRunDry (Verifies REQ_Lubrication)
+2026-07-19 23:34:54.712 [INFO]   Created and populated Activity Diagram: Test_GearboxRunDry Flow
+2026-07-19 23:34:54.727 [INFO] Created Test Case: Test_DriveshaftShielding (Verifies REQ_Driveshaft_Shielding)
+2026-07-19 23:34:54.760 [INFO]   Created and populated Activity Diagram: Test_DriveshaftShielding Flow
+2026-07-19 23:34:54.777 [INFO] Created Use Cases (38 items)
+2026-07-19 23:34:54.784 [INFO] Created block: Modern Bell 47
+2026-07-19 23:34:54.801 [INFO] Allocated Part: engine under Modern Bell 47
+2026-07-19 23:34:54.808 [INFO] Allocated Part: mainrotor under Modern Bell 47
+2026-07-19 23:34:54.818 [INFO] Allocated Part: cabin under Modern Bell 47
+2026-07-19 23:34:54.846 [INFO] Allocated Part: flightcontroller under Modern Bell 47
+2026-07-19 23:34:54.855 [INFO] Allocated Part: anti-torquesubsystem under Modern Bell 47
+2026-07-19 23:34:54.861 [INFO] Allocated Part: electricalpowersubsystem under Modern Bell 47
+2026-07-19 23:34:54.868 [INFO] Allocated Part: powertrainsubsystem under Modern Bell 47
+2026-07-19 23:34:54.899 [INFO] Created Operation: ExecuteFlightMission under Modern Bell 47
+2026-07-19 23:34:54.903 [INFO] Created Operation: PerformEmergencyLanding under Modern Bell 47
+2026-07-19 23:34:54.906 [INFO] Created Operation: CounterMainRotorTorque under Anti-Torque Subsystem
+2026-07-19 23:34:54.909 [INFO] Created Operation: RegulateBackupPower under Electrical Power Subsystem
+2026-07-19 23:34:54.912 [INFO] Created Operation: TransmitTorque under Powertrain Subsystem
+2026-07-19 23:34:54.941 [INFO] Created State Machine: System State Machine under Modern Bell 47
+2026-07-19 23:34:54.986 [INFO]   Created and populated State Machine Diagram: System State Machine Diagram
+2026-07-19 23:34:54.994 [INFO] Created State Machine: EPS State Machine under Electrical Power Subsystem
+2026-07-19 23:34:55.033 [INFO]   Created and populated State Machine Diagram: EPS State Machine Diagram
+2026-07-19 23:34:55.041 [INFO] Created State Machine: Engine State Machine under Engine
+2026-07-19 23:34:55.076 [INFO]   Created and populated State Machine Diagram: Engine State Machine Diagram
+2026-07-19 23:34:55.083 [INFO] Created State Machine: Rotor State Machine under Main Rotor
+2026-07-19 23:34:55.111 [INFO]   Created and populated State Machine Diagram: Rotor State Machine Diagram
+2026-07-19 23:34:55.118 [INFO] Created State Machine: FCS State Machine under Flight Controller
+2026-07-19 23:34:55.143 [INFO]   Created and populated State Machine Diagram: FCS State Machine Diagram
+2026-07-19 23:34:55.180 [INFO] Created Alternative: CATL NMC Lithium-Ion Pack -> Physical Battery Pack
+2026-07-19 23:34:55.190 [INFO] Created Alternative: Advanced Solid-State Pack -> Physical Battery Pack
+2026-07-19 23:34:55.200 [INFO] Created Alternative: Traditional Aluminum Driveshafts -> Drivetrain Component
+2026-07-19 23:34:55.208 [INFO] Created Alternative: Composite Carbon-Fiber Driveshafts -> Drivetrain Component
+2026-07-19 23:34:55.226 [INFO] Created Satisfy Relationship: Modern Bell 47 -> REQ_Cap
+2026-07-19 23:34:55.228 [INFO] Created Satisfy Relationship: Modern Bell 47 -> REQ_Engine
+2026-07-19 23:34:55.231 [INFO] Created Satisfy Relationship: Anti-Torque Subsystem -> REQ_Part27_Safety
+2026-07-19 23:34:55.233 [INFO] Created Satisfy Relationship: Anti-Torque Subsystem -> REQ_Fatigue
+2026-07-19 23:34:55.235 [INFO] Created Satisfy Relationship: Anti-Torque Subsystem -> REQ_Lubrication
+2026-07-19 23:34:55.238 [INFO] Created Satisfy Relationship: Electrical Power Subsystem -> REQ_Elec_Backup
+2026-07-19 23:34:55.240 [INFO] Created Satisfy Relationship: Electrical Power Subsystem -> REQ_Thermal_Safety
+2026-07-19 23:34:55.243 [INFO] Created Satisfy Relationship: Electrical Power Subsystem -> REQ_Redundant_Power
+2026-07-19 23:34:55.245 [INFO] Created Satisfy Relationship: Electrical Power Subsystem -> REQ_EPS_Capacity
+2026-07-19 23:34:55.248 [INFO] Created Satisfy Relationship: Flight Controller -> REQ_FCS_Latency
+2026-07-19 23:34:55.250 [INFO] Created Satisfy Relationship: Powertrain Subsystem -> REQ_Mech_Clutch
+2026-07-19 23:34:55.253 [INFO] Created Satisfy Relationship: Powertrain Subsystem -> REQ_PWR_Efficiency
+2026-07-19 23:34:55.255 [INFO] Created Satisfy Relationship: Powertrain Subsystem -> REQ_Driveshaft_Shielding
+2026-07-19 23:34:55.282 [INFO] Created Interface Block: PowerFlow with Flow Property torque
+2026-07-19 23:34:55.299 [INFO] Created Interface Block: ElectricalFlow with Flow Property current
+2026-07-19 23:34:55.317 [INFO] Created Interface Block: ControlSignal with Flow Property yawCommand
+2026-07-19 23:34:55.340 [INFO]   Created ProxyPort: p_out_shaft on Engine
+2026-07-19 23:34:55.345 [INFO]   Created ProxyPort: p_in_shaft on Powertrain Subsystem
+2026-07-19 23:34:55.353 [INFO]   Created ProxyPort: p_out_main_rotor on Powertrain Subsystem
+2026-07-19 23:34:55.362 [INFO]   Created ProxyPort: p_out_tail_rotor on Powertrain Subsystem
+2026-07-19 23:34:55.371 [INFO]   Created ProxyPort: p_in_mech on Electrical Power Subsystem
+2026-07-19 23:34:55.380 [INFO]   Created ProxyPort: p_out_elec on Electrical Power Subsystem
+2026-07-19 23:34:55.390 [INFO]   Created ProxyPort: p_out_cmd on Flight Controller
+2026-07-19 23:34:55.400 [INFO]   Created ProxyPort: p_in_elec on Anti-Torque Subsystem
+2026-07-19 23:34:55.409 [INFO]   Created ProxyPort: p_in_mech on Anti-Torque Subsystem
+2026-07-19 23:34:55.418 [INFO]   Created ProxyPort: p_in_cmd on Anti-Torque Subsystem
+2026-07-19 23:34:55.436 [INFO] Created Port Connector: conn_engine_pwr between engine.p_out_shaft and powertrainsubsystem.p_in_shaft
+2026-07-19 23:34:55.440 [INFO] Created Port Connector: conn_pwr_generator between powertrainsubsystem.p_out_tail_rotor and electricalpowersubsystem.p_in_mech
+2026-07-19 23:34:55.442 [INFO] Created Port Connector: conn_elec_torque between electricalpowersubsystem.p_out_elec and anti-torquesubsystem.p_in_elec
+2026-07-19 23:34:55.445 [INFO] Created Port Connector: conn_fcs_cmd between flightcontroller.p_out_cmd and anti-torquesubsystem.p_in_cmd
+2026-07-19 23:34:55.459 [INFO] Created ConstraintBlock: TradeStudyCalculations with constraint mass_eq
+2026-07-19 23:34:55.462 [WARN] SimulationConfig stereotype not found, creating simulation placeholder block.
+2026-07-19 23:34:55.463 [WARN] Could not create Simulation Config Diagram via name 'Simulation Config Diagram', trying fallback 'Simulation Config'
+2026-07-19 23:34:55.470 [ERROR] Could not create simulation diagram via standard names. Creating a standard Class Diagram as placeholder.
 java.lang.IllegalArgumentException: Unknown diagram type: Simulation Config. Use constants from UMLConstants class(UMLConstants.UML_CLASS_DIAGRAM and etc)
 	at com.nomagic.magicdraw.openapi.uml.ModelElementsManager.createDiagram(ModelElementsManager.java:304)
 	at com.nomagic.magicdraw.openapi.uml.ModelElementsManager.createDiagram(ModelElementsManager.java:243)
 	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:344)
-	at ModernBell47Populate.run(ModernBell47Populate.groovy:826)
+	at ModernBell47Populate.run(ModernBell47Populate.groovy:832)
 	at groovy.lang.GroovyShell.evaluate(GroovyShell.java:489)
 	at groovy.lang.GroovyShell.evaluate(GroovyShell.java:533)
 	at org.codehaus.groovy.vmplugin.v8.IndyInterface.fromCache(IndyInterface.java:344)
@@ -106,30 +115,32 @@ java.lang.IllegalArgumentException: Unknown diagram type: Simulation Config. Use
 	at groovy.lang.Closure.run(Closure.java:543)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
 
-2026-07-18 20:27:39.346 [INFO]   Created and populated Simulation Configuration Diagram.
-2026-07-18 20:27:39.520 [INFO] Advanced Model population complete and session closed successfully.
-2026-07-18 20:27:39.521 [INFO] Layouting diagrams...
-2026-07-18 20:27:39.956 [INFO] Successfully laid out diagram: Test_YawAuthority Flow
-2026-07-18 20:27:40.035 [INFO] Successfully laid out diagram: Test_BatteryDuration Flow
-2026-07-18 20:27:40.114 [INFO] Successfully laid out diagram: Test_ThermalRunaway Flow
-2026-07-18 20:27:40.217 [INFO] Successfully laid out diagram: Test_GearboxRunDry Flow
-2026-07-18 20:27:40.359 [INFO] Successfully laid out diagram: System State Machine Diagram
-2026-07-18 20:27:40.480 [INFO] Successfully laid out diagram: EPS State Machine Diagram
-2026-07-18 20:27:40.638 [INFO] Successfully laid out diagram: Engine State Machine Diagram
-2026-07-18 20:27:40.727 [INFO] Successfully laid out diagram: Rotor State Machine Diagram
-2026-07-18 20:27:40.781 [INFO] Successfully laid out diagram: FCS State Machine Diagram
-2026-07-18 20:27:40.848 [INFO] Successfully laid out diagram: Modern Bell 47 Simulation Configuration Diagram
-2026-07-18 20:27:40.850 [INFO] ---------------------------------------------------------------------------------
-2026-07-18 20:27:40.851 [INFO]             FULL-FIDELITY PARAMETRIC TRADE STUDY EVALUATION MATRIX               
-2026-07-18 20:27:40.852 [INFO] ---------------------------------------------------------------------------------
-2026-07-18 20:27:40.853 [INFO] | Config | Drivetrain | Material | Battery | Cabin | Payload | Life (yr) | Mass (kg) | Cost ($) | MTBF (hr) | P_fail | Lawsuit ($) | LifeCost ($) | Score |
-2026-07-18 20:27:40.853 [INFO] |--------|------------|----------|---------|-------|---------|-----------|-----------|----------|-----------|--------|-------------|--------------|-------|
-2026-07-18 20:27:40.877 [INFO] | CFG-1  | Mechanical | Aluminum | N/A     | Enclosed | 150.0   | 10.0      | 95.0      | 25000    | 1500      | 0.8647 | 1729329     | 1829329      | 12.8  |
-2026-07-18 20:27:40.879 [INFO] | CFG-2  | Mechanical | Aluminum | N/A     | Enclosed | 150.0   | 40.0      | 95.0      | 25000    | 1500      | 0.9997 | 1999329     | 2324329      | 12.8  |
-2026-07-18 20:27:40.881 [INFO] | CFG-3  | Mechanical | Composite | N/A     | Enclosed | 150.0   | 40.0      | 78.5      | 45000    | 4500      | 0.9305 | 1861033     | 2056033      | 19.4  |
-2026-07-18 20:27:40.882 [INFO] | CFG-4  | Electric   | Aluminum | Lithium-Ion | Enclosed | 150.0   | 10.0      | 102.0     | 32000    | 5000      | 0.4512 | 270713      | 317713       | 40.3  |
-2026-07-18 20:27:40.883 [INFO] | CFG-5  | Electric   | Aluminum | Lithium-Ion | Enclosed | 150.0   | 40.0      | 102.0     | 32000    | 5000      | 0.9093 | 545569      | 637569       | 40.3  |
-2026-07-18 20:27:40.885 [INFO] | CFG-6  | Electric   | Composite | Solid-State | Enclosed | 150.0   | 40.0      | 79.8      | 59900    | 15000     | 0.5507 | 33040       | 122940       | 62.6  |
-2026-07-18 20:27:40.886 [INFO] | CFG-7  | Electric   | Composite | Solid-State | Utility | 150.0   | 40.0      | 49.8      | 59900    | 15000     | 0.5507 | 33040       | 122940       | 67.4  |
-2026-07-18 20:27:40.887 [INFO] ---------------------------------------------------------------------------------
-2026-07-18 20:27:40.888 [INFO] Parametric Trade Study analysis complete.
+2026-07-19 23:34:55.517 [INFO]   Created and populated Simulation Configuration Diagram.
+2026-07-19 23:34:55.870 [INFO] Advanced Model population complete and session closed successfully.
+2026-07-19 23:34:55.872 [INFO] Layouting diagrams...
+2026-07-19 23:34:56.439 [INFO] Successfully laid out diagram: Test_YawAuthority Flow
+2026-07-19 23:34:56.851 [INFO] Successfully laid out diagram: Test_BatteryDuration Flow
+2026-07-19 23:34:57.279 [INFO] Successfully laid out diagram: Test_ThermalRunaway Flow
+2026-07-19 23:34:57.765 [INFO] Successfully laid out diagram: Test_PowerRedundancy Flow
+2026-07-19 23:34:58.191 [INFO] Successfully laid out diagram: Test_GearboxRunDry Flow
+2026-07-19 23:34:58.574 [INFO] Successfully laid out diagram: Test_DriveshaftShielding Flow
+2026-07-19 23:34:58.995 [INFO] Successfully laid out diagram: System State Machine Diagram
+2026-07-19 23:34:59.362 [INFO] Successfully laid out diagram: EPS State Machine Diagram
+2026-07-19 23:34:59.714 [INFO] Successfully laid out diagram: Engine State Machine Diagram
+2026-07-19 23:35:00.028 [INFO] Successfully laid out diagram: Rotor State Machine Diagram
+2026-07-19 23:35:00.309 [INFO] Successfully laid out diagram: FCS State Machine Diagram
+2026-07-19 23:35:00.762 [INFO] Successfully laid out diagram: Modern Bell 47 Simulation Configuration Diagram
+2026-07-19 23:35:00.764 [INFO] ---------------------------------------------------------------------------------
+2026-07-19 23:35:00.766 [INFO]             FULL-FIDELITY PARAMETRIC TRADE STUDY EVALUATION MATRIX               
+2026-07-19 23:35:00.766 [INFO] ---------------------------------------------------------------------------------
+2026-07-19 23:35:00.767 [INFO] | Config | Drivetrain | Material | Battery | Cabin | Payload | Life (yr) | Mass (kg) | Cost ($) | MTBF (hr) | P_fail | Lawsuit ($) | LifeCost ($) | Score |
+2026-07-19 23:35:00.768 [INFO] |--------|------------|----------|---------|-------|---------|-----------|-----------|----------|-----------|--------|-------------|--------------|-------|
+2026-07-19 23:35:00.823 [INFO] | CFG-1  | Mechanical | Aluminum | N/A     | Enclosed | 150.0   | 10.0      | 95.0      | 25000    | 1500      | 0.8647 | 1729329     | 1829329      | 12.8  |
+2026-07-19 23:35:00.824 [INFO] | CFG-2  | Mechanical | Aluminum | N/A     | Enclosed | 150.0   | 40.0      | 95.0      | 25000    | 1500      | 0.9997 | 1999329     | 2324329      | 12.8  |
+2026-07-19 23:35:00.827 [INFO] | CFG-3  | Mechanical | Composite | N/A     | Enclosed | 150.0   | 40.0      | 78.5      | 45000    | 4500      | 0.9305 | 1861033     | 2056033      | 19.4  |
+2026-07-19 23:35:00.828 [INFO] | CFG-4  | Electric   | Aluminum | Lithium-Ion | Enclosed | 150.0   | 10.0      | 102.0     | 32000    | 5000      | 0.4512 | 270713      | 317713       | 40.3  |
+2026-07-19 23:35:00.830 [INFO] | CFG-5  | Electric   | Aluminum | Lithium-Ion | Enclosed | 150.0   | 40.0      | 102.0     | 32000    | 5000      | 0.9093 | 545569      | 637569       | 40.3  |
+2026-07-19 23:35:00.832 [INFO] | CFG-6  | Electric   | Composite | Solid-State | Enclosed | 150.0   | 40.0      | 79.8      | 59900    | 15000     | 0.5507 | 33040       | 122940       | 62.6  |
+2026-07-19 23:35:00.833 [INFO] | CFG-7  | Electric   | Composite | Solid-State | Utility | 150.0   | 40.0      | 49.8      | 59900    | 15000     | 0.5507 | 33040       | 122940       | 67.4  |
+2026-07-19 23:35:00.834 [INFO] ---------------------------------------------------------------------------------
+2026-07-19 23:35:00.835 [INFO] Parametric Trade Study analysis complete.
